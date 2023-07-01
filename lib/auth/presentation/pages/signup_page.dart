@@ -4,11 +4,11 @@ import 'package:oech_app/auth/presentation/pages/signin_page.dart';
 import 'package:oech_app/auth/presentation/states/singup_state.dart';
 import 'package:oech_app/core/theme/colors.dart';
 import 'package:oech_app/core/widgets/buttons.dart';
-import 'package:oech_app/auth/presentation/pages/loading_page.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../home/presentation/pages/home_page.dart';
 import '../widgets/text_field.dart';
+import 'loading_page.dart';
 
 class SignupPage extends ConsumerWidget {
   SignupPage({Key? key}) : super(key: key);

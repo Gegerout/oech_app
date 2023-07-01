@@ -9,4 +9,5 @@ class AppColors {
   static Color grey2Color = const Color(0xFFA7A7A7);
   static Color grey6Color = const Color(0xFFF2F2F2);
   static Color warningColor = const Color(0xFFEBBC2E);
+  static Color scaffoldColor = const Color(0xFFFFFFFF);
 }

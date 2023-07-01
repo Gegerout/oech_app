@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oech_app/auth/presentation/pages/loading_page.dart';
 import 'package:oech_app/auth/presentation/pages/password_page.dart';
 import 'package:oech_app/auth/presentation/pages/signup_page.dart';
 import 'package:oech_app/auth/presentation/states/signin_state.dart';
-import 'package:oech_app/auth/presentation/pages/loading_page.dart';
+import 'package:oech_app/home/presentation/pages/home_page.dart';
 
 import '../../../core/theme/colors.dart';
 import '../../../core/widgets/buttons.dart';

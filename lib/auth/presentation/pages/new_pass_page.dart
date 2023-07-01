@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oech_app/auth/presentation/pages/loading_page.dart';
 import 'package:oech_app/auth/presentation/states/password_state.dart';
+import 'package:oech_app/home/presentation/pages/home_page.dart';
 
 import '../../../core/theme/colors.dart';
 import '../../../core/widgets/buttons.dart';
-import '../../../home/presentation/pages/home_page.dart';
 import '../widgets/text_field.dart';
 
 class NewPassPage extends ConsumerWidget {
@@ -95,7 +96,7 @@ class NewPassPage extends ConsumerWidget {
                       } else {
                         ref.read(passwordProvider.notifier).updateUser(passwordCont1.text).then((value) {
                           if(value) {
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomePage()), (route) => false);
+                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const HomePage(0)), (route) => false);
                           }
                           else {
                             showDialog(

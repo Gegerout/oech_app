@@ -1,5 +1,3 @@
-import 'package:crypto/crypto.dart';
-
 class UserModel {
   final String name;
   final String phone;

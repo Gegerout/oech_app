@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oech_app/home/presentation/pages/home_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({Key? key}) : super(key: key);
@@ -19,8 +20,8 @@ class _LoadingPageState extends State<LoadingPage> {
     final authSubscription = supabase.auth.onAuthStateChange.listen((data) {
       final AuthChangeEvent event = data.event;
       if (event == AuthChangeEvent.signedIn) {
-        WidgetsBinding.instance.addPostFrameCallback((_){
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => HomePage(0)), (route) => false);
         });
       }
     });

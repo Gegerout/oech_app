@@ -74,9 +74,7 @@ class RemoteData {
             await supabase.from("users").select("phone").eq("email", email);
         final model = UserModel(
             name[0]["name"], phone[0]["phone"].toString(), email.toString(), code.toString());
-        print(name[0]["name"]);
         file.writeAsStringSync(json.encode(model));
-        print(json.decode(file.readAsStringSync()));
         return model;
       } else {
         final name =

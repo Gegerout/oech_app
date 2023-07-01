@@ -23,3 +23,14 @@ class userNotifier extends ChangeNotifier {
     await DataRepository().saveUser();
   }
 }
+
+final themeProvider = ChangeNotifierProvider((ref) => themeNotifier());
+
+class themeNotifier extends ChangeNotifier {
+  bool darkMode = false;
+
+  void changeTheme() {
+    darkMode = !darkMode;
+    notifyListeners();
+  }
+}

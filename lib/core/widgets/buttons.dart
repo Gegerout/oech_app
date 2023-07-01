@@ -28,13 +28,13 @@ Widget secondaryButton(String text, void Function() onPressed, FontWeight weight
             elevation: 0,
             shape: RoundedRectangleBorder(
                 side: BorderSide(color: AppColors.primaryColor, width: 1),
-                borderRadius: BorderRadius.circular(8))),
+                borderRadius: BorderRadius.circular(4))),
         child: Text(
           text,
           style: TextStyle(
               fontSize: size,
               fontWeight: weight,
-              color: const Color(0xFF434343)),
+              color: AppColors.primaryColor),
         )
   );
 }
@@ -48,7 +48,7 @@ Widget disabledButton(String text, void Function() onPressed, FontWeight weight,
             elevation: 0,
             shape: RoundedRectangleBorder(
                 side: const BorderSide(color: Color(0xFF292929), width: 1),
-                borderRadius: BorderRadius.circular(8))),
+                borderRadius: BorderRadius.circular(4))),
         child: Text(
           text,
           style: TextStyle(

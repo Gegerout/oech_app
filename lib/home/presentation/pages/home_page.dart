@@ -2,25 +2,258 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oech_app/core/theme/colors.dart';
+import 'package:oech_app/home/presentation/pages/notifications_page.dart';
+import 'package:oech_app/home/presentation/pages/profile_page.dart';
+import 'package:oech_app/home/presentation/pages/send_package_page.dart';
+import 'package:oech_app/home/presentation/pages/track_page.dart';
+import 'package:oech_app/home/presentation/pages/wallet_page.dart';
 import 'package:oech_app/home/presentation/states/home_state.dart';
+import 'package:oech_app/home/presentation/states/profile_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/states/main_state.dart';
 
 class HomePage extends ConsumerStatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage(this.index, {Key? key}) : super(key: key);
+
+  final int index;
 
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  List pages = [HomeWidget(), WalletPage(), TrackPage(), ProfilePage()];
+
+  late int currentIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    currentIndex = widget.index;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: pages.elementAt(currentIndex),
+      bottomNavigationBar: SizedBox(
+        width: double.infinity,
+        height: 60,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            InkWell(
+              onTap: () {
+                setState(() {
+                  currentIndex = 0;
+                });
+              },
+              child: Column(
+                children: [
+                  Visibility(
+                    visible: currentIndex == 0,
+                    child: Container(
+                      width: 35,
+                      height: 2,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.primaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primaryColor,
+                            blurRadius: 3,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Image.asset(
+                    currentIndex == 0
+                        ? "assets/images/home_active.png"
+                        : "assets/images/home_icon.png",
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    "Home",
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: currentIndex == 0
+                            ? AppColors.primaryColor
+                            : AppColors.grey2Color),
+                  )
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  currentIndex = 1;
+                });
+              },
+              child: Column(
+                children: [
+                  Visibility(
+                    visible: currentIndex == 1,
+                    child: Container(
+                      width: 35,
+                      height: 2,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.primaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primaryColor,
+                            blurRadius: 3,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Image.asset(
+                    currentIndex == 1
+                        ? "assets/images/wallet_active.png"
+                        : "assets/images/wallet_icon.png",
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    "Wallet",
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: currentIndex == 1
+                            ? AppColors.primaryColor
+                            : AppColors.grey2Color),
+                  )
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  currentIndex = 2;
+                });
+              },
+              child: Column(
+                children: [
+                  Visibility(
+                    visible: currentIndex == 2,
+                    child: Container(
+                      width: 35,
+                      height: 2,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.primaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primaryColor,
+                            blurRadius: 3,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Image.asset(
+                    currentIndex == 2
+                        ? "assets/images/car_active.png"
+                        : "assets/images/car_icon.png",
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    "Track",
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: currentIndex == 2
+                            ? AppColors.primaryColor
+                            : AppColors.grey2Color),
+                  )
+                ],
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                setState(() {
+                  currentIndex = 3;
+                });
+              },
+              child: Column(
+                children: [
+                  Visibility(
+                    visible: currentIndex == 3,
+                    child: Container(
+                      width: 35,
+                      height: 2,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: AppColors.primaryColor,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.primaryColor,
+                            blurRadius: 3,
+                            offset: const Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Image.asset(
+                    currentIndex == 3
+                        ? "assets/images/profile_active.png"
+                        : "assets/images/profile_icon.png",
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.fill,
+                  ),
+                  const SizedBox(height: 3),
+                  Text(
+                    "Profile",
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: currentIndex == 3
+                            ? AppColors.primaryColor
+                            : AppColors.grey2Color),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HomeWidget extends ConsumerStatefulWidget {
+  const HomeWidget({Key? key}) : super(key: key);
+
+  @override
+  ConsumerState<HomeWidget> createState() => _HomeWidgetState();
+}
+
+class _HomeWidgetState extends ConsumerState<HomeWidget> {
   final supabase = Supabase.instance.client;
   late Color color;
   late double padding;
   late double textWidth;
-  late User? user;
+  late User user;
   int currentTab = 6;
+
+  List pages = ["", SendPackagePage(), "", ""];
 
   @override
   void initState() {
@@ -29,7 +262,8 @@ class _HomePageState extends ConsumerState<HomePage> {
       if (supabase.auth.currentUser?.appMetadata["provider"] == "google") {
         ref.read(userProvider.notifier).saveUser();
       }
-      user = supabase.auth.currentUser;
+      user = supabase.auth.currentUser!;
+      ref.read(profileDataProvider.notifier).updateBalance("N10,712:00");
     }
     color = Colors.white;
   }
@@ -37,7 +271,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final data = ref.watch(homeProvider).data;
-    user = supabase.auth.currentUser;
+    user = supabase.auth.currentUser!;
 
     return Scaffold(
       body: SafeArea(
@@ -88,7 +322,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Hello ${user?.userMetadata?["name"]}",
+                                "Hello ${user.userMetadata?["name"]}",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 24,
@@ -102,11 +336,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ],
                           ),
                           const Spacer(),
-                          Image.asset(
-                            "assets/images/notif_icon.png",
-                            width: 24,
-                            height: 24,
-                            fit: BoxFit.fill,
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NotificationsPage()));
+                            },
+                            child: Image.asset(
+                              "assets/images/notif_icon.png",
+                              width: 24,
+                              height: 24,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ],
                       ),
@@ -217,7 +459,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: data.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisSpacing: 23,
+                        crossAxisSpacing: 23,
                         mainAxisSpacing: 23,
                         crossAxisCount: 2),
                     itemBuilder: (context, index) {
@@ -226,10 +468,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                           setState(() {
                             currentTab = index;
                           });
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => pages[index]));
                         },
                         child: Material(
                           elevation: 2,
-                          color: currentTab == index ? AppColors.primaryColor : AppColors.grey6Color,
+                          color: currentTab == index
+                              ? AppColors.primaryColor
+                              : AppColors.grey6Color,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)),
                           child: Padding(
