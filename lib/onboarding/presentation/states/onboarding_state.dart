@@ -5,7 +5,8 @@ import '../../data/repository/data_repository.dart';
 
 final onboardingProvider = FutureProvider((ref) async {
   final data = await DataRepository().getOnboarding();
-  return data.data;
+  final models = data.data;
+  return models;
 });
 
 final onboardingStateProvider = ChangeNotifierProvider((ref) =>

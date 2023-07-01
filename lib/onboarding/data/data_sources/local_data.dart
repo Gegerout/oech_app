@@ -16,14 +16,17 @@ class LocalData {
   Future<void> saveShowed() async {
     var dir = await getTemporaryDirectory();
     final File file = File("${dir.path}/onbData.json");
-    file.writeAsStringSync("true");
+    file.writeAsStringSync("true", mode: FileMode.write);
   }
 
   Future<bool> getShowed() async {
     var dir = await getTemporaryDirectory();
     final File file = File("${dir.path}/onbData.json");
     if(file.existsSync()) {
-      return true;
+      if(file.readAsStringSync() == "true") {
+        return true;
+      }
+      return false;
     }
     return false;
   }

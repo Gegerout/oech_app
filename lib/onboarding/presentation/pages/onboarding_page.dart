@@ -104,7 +104,8 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignupPage()));
+                                    builder: (context) => const SignupPage()));
+                            ref.read(onboardingStateProvider.notifier).saveShowed();
                           }, FontWeight.w700, 9.385)),
                       const Spacer(),
                       SizedBox(
@@ -174,7 +175,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                   height: 46,
                   child: primaryButton("Sign Up", () {
                     ref.read(onboardingStateProvider.notifier).saveShowed();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => SignupPage()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const SignupPage()));
                   }, FontWeight.w700, 16)),
               Padding(
                 padding:
@@ -196,7 +197,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                       child: TextButton(
                           onPressed: () {
                             ref.read(onboardingStateProvider.notifier).saveShowed();
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => SigninPage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const SigninPage()));
                           },
                           style: TextButton.styleFrom(padding: EdgeInsets.zero),
                           child: Text(
