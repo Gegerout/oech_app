@@ -1,0 +1,56 @@
+name: oech_app
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.2 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  flutter_riverpod: ^2.3.6
+  path_provider: ^2.0.15
+  dots_indicator: ^3.0.0
+  supabase_flutter: ^1.10.5
+  crypto: ^3.0.3
+  url_launcher: ^6.1.11
+  pinput: ^2.2.31
+  cached_network_image: ^3.2.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  test: any
+
+  flutter_lints: ^2.0.0
+  flutter_native_splash: ^2.3.1
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/splash_icon.png
+  android_12:
+    color: "#FFFFFF"
+    image: assets/images/splash_icon.png
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/json/
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Black.ttf
+          weight: 900
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Roboto-Thin.ttf
+          weight: 300

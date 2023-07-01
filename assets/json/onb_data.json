@@ -1,0 +1,19 @@
+{
+  "data": [
+    {
+      "title": "Quick Delivery At Your\nDoorstep",
+      "subtitle": "Enjoy quick pick-up and delivery to\nyour destination",
+      "image": "assets/images/onb1.png"
+    },
+    {
+      "title": "Flexible Payment",
+      "subtitle": "Different modes of payment either\nbefore and after delivery without stress",
+      "image": "assets/images/onb2.png"
+    },
+    {
+      "title": "Real-time Tracking",
+      "subtitle": "Track your packages/items from the\ncomfort of your home till final destination",
+      "image": "assets/images/onb3.png"
+    }
+  ]
+}
