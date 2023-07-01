@@ -14,10 +14,4 @@ class DataRepository extends Repository {
   Future<void> saveShowed() async {
     await LocalData().saveShowed();
   }
-
-  @override
-  Future<bool> getShowed() async {
-    final data = await LocalData().getShowed();
-    return data;
-  }
 }
