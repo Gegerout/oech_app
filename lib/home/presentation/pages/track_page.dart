@@ -17,6 +17,8 @@ class TrackPage extends ConsumerStatefulWidget {
 }
 
 class _TrackPageState extends ConsumerState<TrackPage> {
+  var markers = <Marker>[];
+
   @override
   void dispose() {
     super.dispose();
@@ -28,6 +30,27 @@ class _TrackPageState extends ConsumerState<TrackPage> {
         body:
             ref.watch(positionProvider(ref.watch(homeProvider).orders[0])).when(
                 data: (value) {
+                  markers = [
+                    Marker(
+                      point: LatLng(value.$1.latitude, value.$1.longitude),
+                      builder: (context) => Image.asset(
+                        "assets/images/pin_icon.png",
+                      ),
+                    ),
+                    Marker(
+                      point: LatLng(value.$1.latitude - 0.0007, value.$1.longitude + 0.003),
+                      builder: (context) => Image.asset(
+                        "assets/images/pin_icon.png",
+                      ),
+                    ),
+                    Marker(
+                      point: LatLng(value.$1.latitude + 0.01, value.$1.longitude + 0.01),
+                      builder: (context) => Image.asset(
+                        "assets/images/pin_icon.png",
+                      ),
+                    )
+                  ];
+
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -36,13 +59,22 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                           child: FlutterMap(
                             options: MapOptions(
                                 center: LatLng(
-                                    value.$1.latitude, value.$1.longitude),
+                                    value.$1.latitude + 0.006, value.$1.longitude),
                                 zoom: 14),
                             children: [
                               TileLayer(
                                 urlTemplate:
                                     "https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}@2x.png",
                                 userAgentPackageName: 'com.example.app',
+                              ),
+                              MarkerLayer(
+                                markers: markers,
+                              ),
+                              PolylineLayer(
+                                polylineCulling: false,
+                                polylines: [
+                                  Polyline(points: value.$3, color: Colors.blue, strokeWidth: 9)
+                                ],
                               )
                             ],
                           )),

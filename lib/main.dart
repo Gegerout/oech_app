@@ -38,10 +38,10 @@ class MyApp extends ConsumerWidget {
             fontFamily: "Roboto"),
         home: ref.watch(mainProvider).when(
             data: (value) {
-              if (value[0] && !value[1] && !(supabase.auth.currentUser != null && supabase.auth.currentUser?.appMetadata["provider"] != "google")) {
+              if (value[0] && !value[1] && !(supabase.auth.currentUser != null && supabase.auth.currentUser?.appMetadata["provider"] == "google")) {
                 return SignupPage();
               }
-              else if(value[1] || supabase.auth.currentUser != null ) {
+              else if(value[1] || supabase.auth.currentUser != null) {
                 return const HomePage(0);
               }
               return const OnboardingPage();
