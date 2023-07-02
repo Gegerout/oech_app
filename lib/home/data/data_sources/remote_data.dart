@@ -32,9 +32,20 @@ class RemoteData {
         .from("users")
         .select("balance")
         .eq("email", supabase.auth.currentUser?.email);
-    final model = UserModel(name[0]["name"], phone[0]["phone"],
-        supabase.auth.currentUser!.email!, balance[0]["balance"]);
-    return model;
+    final List transactions = await supabase
+        .from("users")
+        .select("transactions")
+        .eq("email", supabase.auth.currentUser?.email);
+    if(transactions.isEmpty) {
+      final model = UserModel(name[0]["name"], phone[0]["phone"],
+          supabase.auth.currentUser!.email!, balance[0]["balance"], []);
+      return model;
+    }
+    else {
+      final model = UserModel(name[0]["name"], phone[0]["phone"],
+          supabase.auth.currentUser!.email!, balance[0]["balance"], transactions[0]["transactions"]);
+      return model;
+    }
   }
 
   Future<void> updateBalance(String balance) async {
@@ -103,6 +114,70 @@ class RemoteData {
         packages[0]["package_details"],
         supabase.auth.currentUser!.email!,
         track);
+    return model;
+  }
+
+  Future<List<String>> getOrders() async {
+    final supabase = Supabase.instance.client;
+    final List orders = await supabase.from("orders").select("track").eq("email", supabase.auth.currentUser!.email!).order("id", ascending: false);
+    if(orders.isEmpty) {
+      return [];
+    }
+    else {
+      return [orders[0]["track"]];
+    }
+  }
+
+  Future<void> createTransaction(List data) async {
+    final supabase = Supabase.instance.client;
+    await supabase.from("users").update({
+      "transactions": data
+    }).eq("email", supabase.auth.currentUser!.email!);
+  }
+
+  Future<void> setOrderState(List data, String track) async {
+    final supabase = Supabase.instance.client;
+    await supabase.from("orders").update({
+      "state": data,
+      "updated_at": DateTime.now().toString()
+    }).eq("track", track);
+  }
+
+  Future<OrderModel> getOrderDetails(String track) async {
+    final supabase = Supabase.instance.client;
+    List origins = [];
+    origins = await supabase
+        .from("orders")
+        .select("origin_details")
+        .eq("track", track);
+    while (origins.isEmpty) {
+      origins = await supabase
+          .from("orders")
+          .select("origin_details")
+          .eq("track", track);
+    }
+    final destinations = await supabase
+        .from("orders")
+        .select("destination_details")
+        .eq("track", track);
+    final packages = await supabase
+        .from("orders")
+        .select("package_details")
+        .eq("track", track);
+    final state = await supabase
+        .from("orders")
+        .select("state")
+        .eq("track", track);
+    final createdTime = await supabase
+        .from("orders")
+        .select("updated_at")
+        .eq("track", track);
+    final model = OrderModel(
+        origins[0]["origin_details"],
+        destinations[0]["destination_details"],
+        packages[0]["package_details"],
+        supabase.auth.currentUser!.email!,
+        track, state: state[0]["state"], createdTime: DateTime.parse(createdTime[0]["updated_at"]));
     return model;
   }
 }

@@ -597,6 +597,7 @@ class ConfirmOrderPage extends ConsumerWidget {
                           width: 168,
                           height: 48,
                           child: primaryButtonSmall("Make payment", () {
+                            ref.read(sendPackageProvider.notifier).setOrderState([false, false, false, false], track);
                             Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(

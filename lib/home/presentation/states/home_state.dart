@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/repository/data_repository.dart';
 
 final imagesProvider = FutureProvider((ref) async {
+  ref.read(homeProvider.notifier).getOrders();
   final data = await DataRepository().getImages();
   return data.data;
 });
@@ -11,6 +12,8 @@ final imagesProvider = FutureProvider((ref) async {
 final homeProvider = ChangeNotifierProvider((ref) => homeNotifier());
 
 class homeNotifier extends ChangeNotifier {
+  List orders = [];
+
   List data = [
     [
       "Customer Care",
@@ -37,4 +40,10 @@ class homeNotifier extends ChangeNotifier {
       "assets/images/car_white.png"
     ]
   ];
+
+  void getOrders() async {
+    final data = await DataRepository().getOrders();
+    orders = data;
+    notifyListeners();
+  }
 }

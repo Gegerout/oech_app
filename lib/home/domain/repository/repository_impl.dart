@@ -10,4 +10,8 @@ abstract class Repository {
   Future<void> logout();
   Future<void> createOrder(OrderUseCase data);
   Future<OrderUseCase> getOrder(String track);
+  Future<void> createTransaction(List data);
+  Future<List<String>> getOrders();
+  Future<void> setOrderState(List data, String track);
+  Future<OrderUseCase> getOrderDetails(String track);
 }

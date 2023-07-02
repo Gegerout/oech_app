@@ -13,7 +13,7 @@ Future<void> main() async {
   await Supabase.initialize(
       url: "https://feyqfihsyhchwsjseqsg.supabase.co",
       anonKey:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZleXFmaWhzeWhjaHdzanNlcXNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODc4ODQ0NjQsImV4cCI6MjAwMzQ2MDQ2NH0.iIjNJGoJ08Gyqo8C1OHG3nHw7CtNRFtGmcLQq10qTxo");
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZleXFmaWhzeWhjaHdzanNlcXNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODc4ODQ0NjQsImV4cCI6MjAwMzQ2MDQ2NH0.iIjNJGoJ08Gyqo8C1OHG3nHw7CtNRFtGmcLQq10qTxo");
   runApp(ProviderScope(child: MyApp()));
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) return stack.vmTrace;
@@ -32,9 +32,9 @@ class MyApp extends ConsumerWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          scaffoldBackgroundColor: AppColors.scaffoldColor,
+            scaffoldBackgroundColor: AppColors.scaffoldColor,
             colorScheme:
-                ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+            ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
             fontFamily: "Roboto"),
         home: ref.watch(mainProvider).when(
             data: (value) {
@@ -54,9 +54,9 @@ class MyApp extends ConsumerWidget {
               );
             },
             loading: () => const Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )));
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            )));
   }
 }

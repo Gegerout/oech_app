@@ -10,4 +10,6 @@ class AppColors {
   static Color grey6Color = const Color(0xFFF2F2F2);
   static Color warningColor = const Color(0xFFEBBC2E);
   static Color scaffoldColor = const Color(0xFFFFFFFF);
+  static Color errorColor = const Color(0xFFED3A3A);
+  static Color successColor = const Color(0xFF35B369);
 }

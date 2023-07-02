@@ -41,4 +41,27 @@ class DataRepository extends Repository {
     final usecase = OrderUseCase(data);
     return usecase;
   }
+
+  @override
+  Future<void> createTransaction(List data) async {
+    await RemoteData().createTransaction(data);
+  }
+
+  @override
+  Future<List<String>> getOrders() async {
+    final data = await RemoteData().getOrders();
+    return data;
+  }
+
+  @override
+  Future<void> setOrderState(List data, String track) async {
+    await RemoteData().setOrderState(data, track);
+  }
+
+  @override
+  Future<OrderUseCase> getOrderDetails(String track) async {
+    final data = await RemoteData().getOrderDetails(track);
+    final usecase = OrderUseCase(data);
+    return usecase;
+  }
 }

@@ -73,6 +73,10 @@ class sendPackageNotifier extends ChangeNotifier {
         worth.isNotEmpty;
     notifyListeners();
   }
+
+  void setOrderState(List data, String track) async {
+    await DataRepository().setOrderState(data, track);
+  }
 }
 
 final orderProvider =

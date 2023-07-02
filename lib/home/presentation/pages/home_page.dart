@@ -138,11 +138,11 @@ class _HomePageState extends ConsumerState<HomePage> {
               ),
             ),
             InkWell(
-              onTap: () {
-                setState(() {
-                  currentIndex = 2;
-                });
-              },
+              onTap: ref.watch(homeProvider).orders.isNotEmpty ? () {
+                  setState(() {
+                    currentIndex = 2;
+                  });
+              } : null,
               child: Column(
                 children: [
                   Visibility(
@@ -272,6 +272,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
   Widget build(BuildContext context) {
     final data = ref.watch(homeProvider).data;
     user = supabase.auth.currentUser!;
+    ref.read(homeProvider.notifier).getOrders();
 
     return Scaffold(
       body: SafeArea(
