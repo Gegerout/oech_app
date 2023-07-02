@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:oech_app/core/theme/colors.dart';
+import 'package:oech_app/core/widgets/buttons.dart';
 import 'package:oech_app/home/presentation/states/track_state.dart';
 
 import '../states/home_state.dart';
@@ -84,6 +85,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                               style: TextStyle(
                                   fontSize: 14, color: AppColors.grey2Color),
                             ),
+                            const SizedBox(height: 24),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -105,7 +107,8 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                             setState(() {
                                               value.$2.state?[0] = true;
                                             });
-                                            ref.refresh(positionProvider(value.$2.track));
+                                            ref.refresh(positionProvider(
+                                                value.$2.track));
                                             ref
                                                 .read(trackProvider.notifier)
                                                 .setOrderState(
@@ -120,29 +123,36 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                       decoration: BoxDecoration(
                                           color: AppColors.grey2Color),
                                     ),
-                                    SizedBox(
-                                      width: 14,
-                                      height: 14,
-                                      child: Checkbox(
-                                          activeColor: AppColors.primaryColor,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(2)),
-                                          side: BorderSide(
-                                              color: AppColors.primaryColor,
-                                              width: 1),
-                                          value: value.$2.state?[1],
-                                          onChanged: (cur) {
-                                            setState(() {
-                                              value.$2.state?[1] = true;
-                                            });
-                                            ref.refresh(positionProvider(value.$2.track));
-                                            ref
-                                                .read(trackProvider.notifier)
-                                                .setOrderState(
-                                                    [true, true, false, false],
-                                                    value.$2.track);
-                                          }),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 2),
+                                      child: SizedBox(
+                                        width: 14,
+                                        height: 14,
+                                        child: Checkbox(
+                                            activeColor: AppColors.primaryColor,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(2)),
+                                            side: BorderSide(
+                                                color: AppColors.primaryColor,
+                                                width: 1),
+                                            value: value.$2.state?[1],
+                                            onChanged: (cur) {
+                                              setState(() {
+                                                value.$2.state?[1] = true;
+                                              });
+                                              ref.refresh(positionProvider(
+                                                  value.$2.track));
+                                              ref
+                                                  .read(trackProvider.notifier)
+                                                  .setOrderState([
+                                                true,
+                                                true,
+                                                false,
+                                                false
+                                              ], value.$2.track);
+                                            }),
+                                      ),
                                     ),
                                     const SizedBox(height: 2),
                                     Container(
@@ -151,68 +161,125 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                       decoration: BoxDecoration(
                                           color: AppColors.grey2Color),
                                     ),
-                                    SizedBox(
-                                      width: 14,
-                                      height: 14,
-                                      child: Checkbox(
-                                          activeColor: AppColors.primaryColor,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(2)),
-                                          side: BorderSide(
-                                              color: AppColors.primaryColor,
-                                              width: 1),
-                                          value: value.$2.state?[2],
-                                          onChanged: (cur) {
-                                            setState(() {
-                                              value.$2.state?[2] = true;
-                                            });
-                                            ref.refresh(positionProvider(value.$2.track));
-                                            ref
-                                                .read(trackProvider.notifier)
-                                                .setOrderState(
-                                                    [true, true, true, false],
-                                                    value.$2.track);
-                                          }),
-                                    ),
-                                    const SizedBox(height: 2),
+                                    !value.$2.state?[1]
+                                        ? Container(
+                                            width: 19,
+                                            height: 19,
+                                            decoration: BoxDecoration(
+                                                color: const Color(0xFFE0E0E0),
+                                                borderRadius:
+                                                    BorderRadius.circular(2.3)),
+                                            child: const Icon(
+                                              Icons.remove,
+                                              size: 20,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        : Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 2),
+                                            child: SizedBox(
+                                              width: 14,
+                                              height: 14,
+                                              child: Checkbox(
+                                                  activeColor:
+                                                      AppColors.primaryColor,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              2)),
+                                                  side: BorderSide(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      width: 1),
+                                                  value: value.$2.state?[2],
+                                                  onChanged: (cur) {
+                                                    setState(() {
+                                                      value.$2.state?[2] = true;
+                                                    });
+                                                    ref.refresh(
+                                                        positionProvider(
+                                                            value.$2.track));
+                                                    ref
+                                                        .read(trackProvider
+                                                            .notifier)
+                                                        .setOrderState([
+                                                      true,
+                                                      true,
+                                                      true,
+                                                      false
+                                                    ], value.$2.track);
+                                                  }),
+                                            ),
+                                          ),
+                                    !value.$2.state?[1]
+                                        ? const SizedBox(height: 0)
+                                        : const SizedBox(height: 2),
                                     Container(
                                       height: 34,
                                       width: 1,
                                       decoration: BoxDecoration(
                                           color: AppColors.grey2Color),
                                     ),
-                                    SizedBox(
-                                      width: 14,
-                                      height: 14,
-                                      child: Checkbox(
-                                          activeColor: AppColors.primaryColor,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(2)),
-                                          side: BorderSide(
-                                              color: AppColors.primaryColor,
-                                              width: 1),
-                                          value: value.$2.state?[3],
-                                          onChanged: (cur) {
-                                            setState(() {
-                                              value.$2.state?[3] = true;
-                                            });
-                                            ref.refresh(positionProvider(value.$2.track));
-                                            ref
-                                                .read(trackProvider.notifier)
-                                                .setOrderState(
-                                                    [true, true, true, true],
-                                                    value.$2.track);
-                                          }),
-                                    ),
+                                    !value.$2.state?[2]
+                                        ? Container(
+                                            width: 19,
+                                            height: 19,
+                                            decoration: BoxDecoration(
+                                                color: const Color(0xFFE0E0E0),
+                                                borderRadius:
+                                                    BorderRadius.circular(2.3)),
+                                            child: const Icon(
+                                              Icons.remove,
+                                              size: 20,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        : Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 2),
+                                            child: SizedBox(
+                                              width: 14,
+                                              height: 14,
+                                              child: Checkbox(
+                                                  activeColor:
+                                                      AppColors.primaryColor,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              2)),
+                                                  side: BorderSide(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      width: 1),
+                                                  value: value.$2.state?[3],
+                                                  onChanged: (cur) {
+                                                    setState(() {
+                                                      value.$2.state?[3] = true;
+                                                    });
+                                                    ref.refresh(
+                                                        positionProvider(
+                                                            value.$2.track));
+                                                    ref
+                                                        .read(trackProvider
+                                                            .notifier)
+                                                        .setOrderState([
+                                                      true,
+                                                      true,
+                                                      true,
+                                                      true
+                                                    ], value.$2.track);
+                                                  }),
+                                            ),
+                                          ),
                                   ],
                                 ),
-                                const SizedBox(width: 7,),
+                                const SizedBox(
+                                  width: 7,
+                                ),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(height: 4),
                                     Text(
                                       "Courier requested",
                                       style: TextStyle(
@@ -247,7 +314,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 12),
+                                    const SizedBox(height: 16),
                                     Text(
                                       "Package ready for delivery",
                                       style: TextStyle(
@@ -282,7 +349,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 12),
+                                    const SizedBox(height: 18),
                                     Text(
                                       "Package in transit",
                                       style: TextStyle(
@@ -317,7 +384,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 12),
+                                    const SizedBox(height: 18),
                                     Text(
                                       "Package delivered",
                                       style: TextStyle(
@@ -356,7 +423,13 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                   ],
                                 )
                               ],
-                            )
+                            ),
+                            const SizedBox(height: 40),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 46,
+                                child: primaryButton("View Package Info", () {},
+                                    FontWeight.w700, 16))
                           ],
                         ),
                       )
