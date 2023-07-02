@@ -73,7 +73,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                               PolylineLayer(
                                 polylineCulling: false,
                                 polylines: [
-                                  Polyline(points: value.$3, color: Colors.blue, strokeWidth: 9)
+                                  Polyline(points: value.$3, color: AppColors.primaryColor, strokeWidth: 3,)
                                 ],
                               )
                             ],
