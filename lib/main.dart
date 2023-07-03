@@ -38,7 +38,7 @@ class MyApp extends ConsumerWidget {
             fontFamily: "Roboto"),
         home: ref.watch(mainProvider).when(
             data: (value) {
-              if (value[0] && !value[1] && !(supabase.auth.currentUser != null && supabase.auth.currentUser?.appMetadata["provider"] != "google")) {
+              if (value[0] && !value[1] && !(supabase.auth.currentUser != null && supabase.auth.currentUser?.appMetadata["provider"] != "email")) {
                 return SignupPage();
               }
               else if(value[1] || supabase.auth.currentUser != null ) {
