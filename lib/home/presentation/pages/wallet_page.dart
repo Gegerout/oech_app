@@ -16,7 +16,6 @@ class WalletPage extends ConsumerWidget {
             appBar: AppBar(
               toolbarHeight: 63,
               backgroundColor: Colors.white,
-              elevation: 1,
               title: Text(
                 "Wallet",
                 style: TextStyle(

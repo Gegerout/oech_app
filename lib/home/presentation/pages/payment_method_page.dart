@@ -26,7 +26,6 @@ class _PaymentMethodPageState extends State<PaymentMethodPage> {
       appBar: AppBar(
         toolbarHeight: 63,
         backgroundColor: Colors.white,
-        elevation: 1,
         leading: Padding(
           padding: const EdgeInsets.only(left: 15),
           child: IconButton(

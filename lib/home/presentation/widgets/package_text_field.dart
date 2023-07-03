@@ -5,7 +5,7 @@ import 'package:oech_app/core/theme/colors.dart';
 Widget packageTextField(String hintText, void Function(String value) onChanged,
     TextInputType keyboardType, {TextEditingController? controller}) {
   return Material(
-    elevation: 1,
+    elevation: 1.3,
     color: Colors.white,
     child: SizedBox(
       width: double.infinity,
