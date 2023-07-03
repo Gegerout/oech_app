@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oech_app/core/widgets/buttons.dart';
+import 'package:oech_app/home/presentation/pages/delivery_success_page.dart';
 import 'package:oech_app/home/presentation/pages/succesful_transaction_page.dart';
 import 'package:oech_app/home/presentation/states/send_package_state.dart';
 import 'package:oech_app/home/presentation/widgets/destination_card_widget.dart';
@@ -46,8 +47,7 @@ class _SendPackagePageState extends ConsumerState<SendPackagePage> {
     String creation() =>
         List.generate(4, (index) => chars[Random().nextInt(chars.length)])
             .join();
-    track =
-        "R-${creation()}-${creation()}-${creation()}-${creation()}";
+    track = "R-${creation()}-${creation()}-${creation()}-${creation()}";
   }
 
   @override
@@ -299,7 +299,12 @@ class _SendPackagePageState extends ConsumerState<SendPackagePage> {
                                           items.text,
                                           weight.text,
                                           worth.text,
-                                          supabase.auth.currentUser!.email!, track);
+                                          supabase.auth.currentUser!.email!,
+                                          track);
+                                  ref
+                                      .read(sendPackageProvider.notifier)
+                                      .setOrderState(
+                                          [false, false, false, false], track);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -386,6 +391,20 @@ class ConfirmOrderPage extends ConsumerWidget {
         toolbarHeight: 63,
         backgroundColor: Colors.white,
         elevation: 1,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 15),
+          child: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Image.asset(
+              "assets/images/arrow-square-right.png",
+              width: 24,
+              height: 24,
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
         centerTitle: true,
         title: Text(
           "Send a package",
@@ -397,6 +416,7 @@ class ConfirmOrderPage extends ConsumerWidget {
       ),
       body: ref.watch(orderProvider(track)).when(
           data: (value) {
+            List data = value.state ?? [false, false, false, false];
             return Padding(
               padding: const EdgeInsets.only(left: 24, right: 24),
               child: Column(
@@ -579,34 +599,70 @@ class ConfirmOrderPage extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 46),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                          width: 168,
-                          height: 48,
-                          child: secondaryButtonSmall("Edit package", () {
-                            ref.refresh(orderProvider(track)).value;
-                            Navigator.pop(context);
-                          }, FontWeight.w700, 16)),
-                      const SizedBox(
-                        width: 24,
-                      ),
-                      SizedBox(
-                          width: 168,
-                          height: 48,
-                          child: primaryButtonSmall("Make payment", () {
-                            ref.read(sendPackageProvider.notifier).setOrderState([false, false, false, false], track);
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        SuccessfulTransactionPage(track: value.track,)),
-                                (route) => false);
-                          }, FontWeight.w700, 16))
-                    ],
-                  )
+                  SizedBox(height: data[3] ? 24 : 46),
+                  data[3]
+                      ? Column(
+                          children: [
+                            Text(
+                              "Click on  delivered for successful delivery and rate rider or report missing item",
+                              style: TextStyle(
+                                  fontSize: 12, color: AppColors.primaryColor),
+                            ),
+                            const SizedBox(height: 41),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                    width: 168,
+                                    height: 48,
+                                    child: secondaryButtonSmall(
+                                        "Report", () {}, FontWeight.w700, 16)),
+                                const SizedBox(
+                                  width: 24,
+                                ),
+                                SizedBox(
+                                    width: 168,
+                                    height: 48,
+                                    child: primaryButtonSmall("Successful", () {
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DeliverySuccessPage()),
+                                          (route) => false);
+                                    }, FontWeight.w700, 16))
+                              ],
+                            )
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                width: 168,
+                                height: 48,
+                                child: secondaryButtonSmall("Edit package", () {
+                                  ref.refresh(orderProvider(track)).value;
+                                  Navigator.pop(context);
+                                }, FontWeight.w700, 16)),
+                            const SizedBox(
+                              width: 24,
+                            ),
+                            SizedBox(
+                                width: 168,
+                                height: 48,
+                                child: primaryButtonSmall("Make payment", () {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SuccessfulTransactionPage(
+                                                track: value.track,
+                                              )),
+                                      (route) => false);
+                                }, FontWeight.w700, 16))
+                          ],
+                        )
                 ],
               ),
             );

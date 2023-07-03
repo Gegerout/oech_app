@@ -74,7 +74,7 @@ class sendPackageNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setOrderState(List data, String track) async {
+  Future<void> setOrderState(List data, String track) async {
     await DataRepository().setOrderState(data, track);
   }
 }
