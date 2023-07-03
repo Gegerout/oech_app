@@ -6,14 +6,15 @@ class RiderModel {
   final List<dynamic>? feedbacks;
   final String gender;
   final String car;
+  final String phone;
 
   factory RiderModel.fromJson(Map<String, dynamic> json) {
     return RiderModel(json["avatar"], json["name"], json["reg_num"],
-        json["rate"], json["gender"], json["car"], feedbacks: json["feedbacks"]);
+        json["rate"], json["gender"], json["car"], json["phone"], feedbacks: json["feedbacks"]);
   }
 
   RiderModel(this.avatar, this.name, this.regNum, this.rate,
-      this.gender, this.car, {this.feedbacks});
+      this.gender, this.car, this.phone, {this.feedbacks});
 
   Map<String, dynamic> toJson() => {
     "avatar": avatar,
@@ -22,6 +23,7 @@ class RiderModel {
     "rate": rate,
     "feedbacks": feedbacks,
     "gender": gender,
-    "car": car
+    "car": car,
+    "phone": phone
   };
 }

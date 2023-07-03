@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:oech_app/core/widgets/buttons.dart';
+import 'package:oech_app/home/presentation/pages/call_page.dart';
 import 'package:oech_app/home/presentation/states/riders_state.dart';
 
 import '../../../core/theme/colors.dart';
@@ -227,7 +228,9 @@ class _RiderProfilePageState extends ConsumerState<RiderProfilePage> {
                           SizedBox(
                             height: ref.watch(ridersProvider).isAll
                                 ? value.$2.feedbacks!.length * 88.0
-                                : value.$2.feedbacks != null ? 2 * 88.0 : 0,
+                                : value.$2.feedbacks != null
+                                    ? 2 * 88.0
+                                    : 0,
                             child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: ref.watch(ridersProvider).isAll
@@ -358,15 +361,20 @@ class _RiderProfilePageState extends ConsumerState<RiderProfilePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                width: 164,
+                                  width: 164,
                                   height: 48,
                                   child: primaryButton("Send message", () {},
                                       FontWeight.w700, 16)),
                               SizedBox(
                                   width: 164,
                                   height: 48,
-                                  child: secondaryButton("Call rider", () {},
-                                      FontWeight.w700, 16))
+                                  child: secondaryButton("Call rider", () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => CallPage(
+                                                regNum: value.$2.regNum)));
+                                  }, FontWeight.w700, 16))
                             ],
                           ),
                           const SizedBox(height: 40),
