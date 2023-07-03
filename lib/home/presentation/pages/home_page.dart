@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oech_app/core/theme/colors.dart';
+import 'package:oech_app/home/presentation/pages/book_rider_page.dart';
 import 'package:oech_app/home/presentation/pages/notifications_page.dart';
 import 'package:oech_app/home/presentation/pages/profile_page.dart';
 import 'package:oech_app/home/presentation/pages/send_package_page.dart';
@@ -253,7 +254,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
   late User user;
   int currentTab = 6;
 
-  List pages = ["", SendPackagePage(), "", ""];
+  List pages = ["", SendPackagePage(), "", BookRiderPage()];
 
   @override
   void initState() {

@@ -9,7 +9,7 @@ Widget profileCardWidget(String image, String title, String subtitle, void Funct
       width: double.infinity,
       height: 62,
       child: Material(
-        elevation: 2,
+        elevation: 2.5,
         color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.only(right: 12, left: 12),

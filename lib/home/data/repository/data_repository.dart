@@ -1,6 +1,8 @@
 import 'package:oech_app/home/data/data_sources/remote_data.dart';
+import 'package:oech_app/home/data/models/rider_model.dart';
 import 'package:oech_app/home/domain/usecases/images_usecase.dart';
 import 'package:oech_app/home/domain/usecases/order_usecase.dart';
+import 'package:oech_app/home/domain/usecases/rider_usecase.dart';
 
 import '../../domain/repository/repository_impl.dart';
 import '../../domain/usecases/user_usecase.dart';
@@ -68,5 +70,18 @@ class DataRepository extends Repository {
   @override
   Future<void> rateDrive(List data, String track) async {
     await RemoteData().rateDrive(data, track);
+  }
+
+  @override
+  Future<RiderUseCase> getRiders() async {
+    final data = await RemoteData().getRiders();
+    final usecase = RiderUseCase(data);
+    return usecase;
+  }
+
+  @override
+  Future<RiderModel> gerRider(String regNum) async {
+    final data = await RemoteData().getRider(regNum);
+    return data;
   }
 }

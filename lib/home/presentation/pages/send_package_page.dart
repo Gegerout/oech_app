@@ -66,7 +66,6 @@ class _SendPackagePageState extends ConsumerState<SendPackagePage> {
       appBar: AppBar(
         toolbarHeight: 63,
         backgroundColor: Colors.white,
-        elevation: 1,
         leading: Padding(
           padding: const EdgeInsets.only(left: 15),
           child: IconButton(
@@ -390,7 +389,6 @@ class ConfirmOrderPage extends ConsumerWidget {
       appBar: AppBar(
         toolbarHeight: 63,
         backgroundColor: Colors.white,
-        elevation: 1,
         leading: Padding(
           padding: const EdgeInsets.only(left: 15),
           child: IconButton(
