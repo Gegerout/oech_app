@@ -14,4 +14,5 @@ abstract class Repository {
   Future<List<String>> getOrders();
   Future<void> setOrderState(List data, String track);
   Future<OrderUseCase> getOrderDetails(String track);
+  Future<void> rateDrive(List data, String track);
 }

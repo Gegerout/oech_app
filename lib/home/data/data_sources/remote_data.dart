@@ -188,4 +188,14 @@ class RemoteData {
     );
     return model;
   }
+
+  Future<void> rateDrive(List data, String track) async {
+    final supabase = Supabase.instance.client;
+    await supabase
+        .from("orders")
+        .update({
+      "rate": data
+    }).eq(
+        "track", track);
+  }
 }

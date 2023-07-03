@@ -2,23 +2,29 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:oech_app/home/presentation/states/send_package_state.dart';
 
 import '../../../core/theme/colors.dart';
 import '../../../core/widgets/buttons.dart';
 import 'home_page.dart';
 
-class DeliverySuccessPage extends StatefulWidget {
-  const DeliverySuccessPage({Key? key}) : super(key: key);
+class DeliverySuccessPage extends ConsumerStatefulWidget {
+  const DeliverySuccessPage(this.track, {Key? key}) : super(key: key);
+
+  final String track;
 
   @override
-  State<DeliverySuccessPage> createState() => _DeliverySuccessPageState();
+  ConsumerState<DeliverySuccessPage> createState() => _DeliverySuccessPageState();
 }
 
-class _DeliverySuccessPageState extends State<DeliverySuccessPage>
+class _DeliverySuccessPageState extends ConsumerState<DeliverySuccessPage>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller =
       AnimationController(vsync: this, duration: const Duration(seconds: 2))
         ..repeat();
+
+  TextEditingController controller = TextEditingController();
 
   late Timer _timer;
   int _start = 4;
@@ -204,6 +210,7 @@ class _DeliverySuccessPageState extends State<DeliverySuccessPage>
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(10),
                       ],
+                      controller: controller,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.feedback_rounded, color: AppColors.primaryColor, size: 18,),
                         contentPadding: const EdgeInsets.only(left: 12),
@@ -222,9 +229,13 @@ class _DeliverySuccessPageState extends State<DeliverySuccessPage>
                     width: double.infinity,
                     height: 46,
                     child: primaryButton("Done", () {
+                      ref.read(sendPackageProvider.notifier).sendRate([
+                        currentIndex,
+                        controller.text
+                      ], widget.track);
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => HomePage(0)),
+                          MaterialPageRoute(builder: (context) => const HomePage(0)),
                           (route) => false);
                     }, FontWeight.w700, 16)),
               ],

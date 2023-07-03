@@ -628,7 +628,7 @@ class ConfirmOrderPage extends ConsumerWidget {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  DeliverySuccessPage()),
+                                                  DeliverySuccessPage(track)),
                                           (route) => false);
                                     }, FontWeight.w700, 16))
                               ],

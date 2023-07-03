@@ -64,4 +64,9 @@ class DataRepository extends Repository {
     final usecase = OrderUseCase(data);
     return usecase;
   }
+
+  @override
+  Future<void> rateDrive(List data, String track) async {
+    await RemoteData().rateDrive(data, track);
+  }
 }

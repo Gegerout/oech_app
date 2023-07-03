@@ -77,6 +77,10 @@ class sendPackageNotifier extends ChangeNotifier {
   Future<void> setOrderState(List data, String track) async {
     await DataRepository().setOrderState(data, track);
   }
+
+  void sendRate(List data, String track) async {
+    await DataRepository().rateDrive(data, track);
+  }
 }
 
 final orderProvider =
