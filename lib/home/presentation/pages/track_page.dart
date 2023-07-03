@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:oech_app/core/theme/colors.dart';
 import 'package:oech_app/core/widgets/buttons.dart';
+import 'package:oech_app/home/presentation/pages/send_package_page.dart';
 import 'package:oech_app/home/presentation/states/track_state.dart';
 
 import '../states/home_state.dart';
@@ -26,6 +27,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.refresh(positionProvider(ref.watch(homeProvider).orders[0])).value;
     return Scaffold(
         body:
             ref.watch(positionProvider(ref.watch(homeProvider).orders[0])).when(
@@ -135,18 +137,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                               color: AppColors.primaryColor,
                                               width: 1),
                                           value: value.$2.state?[0],
-                                          onChanged: (cur) {
-                                            setState(() {
-                                              value.$2.state?[0] = true;
-                                            });
-                                            ref.refresh(positionProvider(
-                                                value.$2.track));
-                                            ref
-                                                .read(trackProvider.notifier)
-                                                .setOrderState(
-                                                    [true, false, false, false],
-                                                    value.$2.track);
-                                          }),
+                                          onChanged: (ind) {}),
                                     ),
                                     const SizedBox(height: 2),
                                     Container(
@@ -169,21 +160,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                                 color: AppColors.primaryColor,
                                                 width: 1),
                                             value: value.$2.state?[1],
-                                            onChanged: (cur) {
-                                              setState(() {
-                                                value.$2.state?[1] = true;
-                                              });
-                                              ref.refresh(positionProvider(
-                                                  value.$2.track));
-                                              ref
-                                                  .read(trackProvider.notifier)
-                                                  .setOrderState([
-                                                true,
-                                                true,
-                                                false,
-                                                false
-                                              ], value.$2.track);
-                                            }),
+                                            onChanged: (ind) {}),
                                       ),
                                     ),
                                     const SizedBox(height: 2),
@@ -225,23 +202,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                                           .primaryColor,
                                                       width: 1),
                                                   value: value.$2.state?[2],
-                                                  onChanged: (cur) {
-                                                    setState(() {
-                                                      value.$2.state?[2] = true;
-                                                    });
-                                                    ref.refresh(
-                                                        positionProvider(
-                                                            value.$2.track));
-                                                    ref
-                                                        .read(trackProvider
-                                                            .notifier)
-                                                        .setOrderState([
-                                                      true,
-                                                      true,
-                                                      true,
-                                                      false
-                                                    ], value.$2.track);
-                                                  }),
+                                                  onChanged: (ind) {}),
                                             ),
                                           ),
                                     !value.$2.state?[1]
@@ -285,23 +246,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                                                           .primaryColor,
                                                       width: 1),
                                                   value: value.$2.state?[3],
-                                                  onChanged: (cur) {
-                                                    setState(() {
-                                                      value.$2.state?[3] = true;
-                                                    });
-                                                    ref.refresh(
-                                                        positionProvider(
-                                                            value.$2.track));
-                                                    ref
-                                                        .read(trackProvider
-                                                            .notifier)
-                                                        .setOrderState([
-                                                      true,
-                                                      true,
-                                                      true,
-                                                      true
-                                                    ], value.$2.track);
-                                                  }),
+                                                  onChanged: (ind) {}),
                                             ),
                                           ),
                                   ],
@@ -460,7 +405,11 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                             SizedBox(
                               width: double.infinity,
                               height: 46,
-                                child: primaryButton("View Package Info", () {},
+                                child: primaryButton("View Package Info", () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => ConfirmOrderPage(
+                                    value.$2.track
+                                  )));
+                                },
                                     FontWeight.w700, 16))
                           ],
                         ),

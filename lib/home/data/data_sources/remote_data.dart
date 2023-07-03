@@ -36,14 +36,17 @@ class RemoteData {
         .from("users")
         .select("transactions")
         .eq("email", supabase.auth.currentUser?.email);
-    if(transactions.isEmpty) {
+    if (transactions.isEmpty) {
       final model = UserModel(name[0]["name"], phone[0]["phone"],
           supabase.auth.currentUser!.email!, balance[0]["balance"], []);
       return model;
-    }
-    else {
-      final model = UserModel(name[0]["name"], phone[0]["phone"],
-          supabase.auth.currentUser!.email!, balance[0]["balance"], transactions[0]["transactions"]);
+    } else {
+      final model = UserModel(
+          name[0]["name"],
+          phone[0]["phone"],
+          supabase.auth.currentUser!.email!,
+          balance[0]["balance"],
+          transactions[0]["transactions"]);
       return model;
     }
   }
@@ -57,7 +60,7 @@ class RemoteData {
   Future<void> logout() async {
     var dir = await getTemporaryDirectory();
     final File file = File("${dir.path}/userData.json");
-    if(file.existsSync()) {
+    if (file.existsSync()) {
       file.deleteSync();
     }
     final supabase = Supabase.instance.client;
@@ -85,6 +88,7 @@ class RemoteData {
         "track": data.track
       });
     }
+    await setOrderState([false, false, false, false], data.track);
   }
 
   Future<OrderModel> getOrder(String track) async {
@@ -108,39 +112,44 @@ class RemoteData {
         .from("orders")
         .select("package_details")
         .eq("track", track);
+    final state =
+        await supabase.from("orders").select("state").eq("track", track);
     final model = OrderModel(
         origins[0]["origin_details"],
         destinations[0]["destination_details"],
         packages[0]["package_details"],
         supabase.auth.currentUser!.email!,
-        track);
+        track,
+        state: state[0]["state"]);
     return model;
   }
 
   Future<List<String>> getOrders() async {
     final supabase = Supabase.instance.client;
-    final List orders = await supabase.from("orders").select("track").eq("email", supabase.auth.currentUser!.email!).order("id", ascending: false);
-    if(orders.isEmpty) {
+    final List orders = await supabase
+        .from("orders")
+        .select("track")
+        .eq("email", supabase.auth.currentUser!.email!)
+        .order("id", ascending: false);
+    if (orders.isEmpty) {
       return [];
-    }
-    else {
+    } else {
       return [orders[0]["track"]];
     }
   }
 
   Future<void> createTransaction(List data) async {
     final supabase = Supabase.instance.client;
-    await supabase.from("users").update({
-      "transactions": data
-    }).eq("email", supabase.auth.currentUser!.email!);
+    await supabase.from("users").update({"transactions": data}).eq(
+        "email", supabase.auth.currentUser!.email!);
   }
 
   Future<void> setOrderState(List data, String track) async {
     final supabase = Supabase.instance.client;
-    await supabase.from("orders").update({
-      "state": data,
-      "updated_at": DateTime.now().toString()
-    }).eq("track", track);
+    await supabase
+        .from("orders")
+        .update({"state": data, "updated_at": DateTime.now().toString()}).eq(
+            "track", track);
   }
 
   Future<OrderModel> getOrderDetails(String track) async {
@@ -164,20 +173,29 @@ class RemoteData {
         .from("orders")
         .select("package_details")
         .eq("track", track);
-    final state = await supabase
-        .from("orders")
-        .select("state")
-        .eq("track", track);
-    final createdTime = await supabase
-        .from("orders")
-        .select("updated_at")
-        .eq("track", track);
+    final state =
+        await supabase.from("orders").select("state").eq("track", track);
+    final createdTime =
+        await supabase.from("orders").select("updated_at").eq("track", track);
     final model = OrderModel(
-        origins[0]["origin_details"],
-        destinations[0]["destination_details"],
-        packages[0]["package_details"],
-        supabase.auth.currentUser!.email!,
-        track, state: state[0]["state"], createdTime: DateTime.parse(createdTime[0]["updated_at"]));
+      origins[0]["origin_details"],
+      destinations[0]["destination_details"],
+      packages[0]["package_details"],
+      supabase.auth.currentUser!.email!,
+      track,
+      state: state[0]["state"],
+      createdTime: DateTime.parse(createdTime[0]["updated_at"]),
+    );
     return model;
+  }
+
+  Future<void> rateDrive(List data, String track) async {
+    final supabase = Supabase.instance.client;
+    await supabase
+        .from("orders")
+        .update({
+      "rate": data
+    }).eq(
+        "track", track);
   }
 }
