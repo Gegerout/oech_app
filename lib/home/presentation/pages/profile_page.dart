@@ -21,7 +21,6 @@ class ProfilePage extends ConsumerWidget {
             appBar: AppBar(
               toolbarHeight: 63,
               backgroundColor: Colors.white,
-              elevation: 1,
               title: Text(
                 "Profile",
                 style: TextStyle(

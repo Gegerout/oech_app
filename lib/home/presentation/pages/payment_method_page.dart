@@ -5,6 +5,11 @@ class PaymentMethodPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 63,
+        backgroundColor: Colors.white,
+      ),
+    );
   }
 }

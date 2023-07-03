@@ -33,6 +33,9 @@ class MyApp extends ConsumerWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           scaffoldBackgroundColor: AppColors.scaffoldColor,
+            appBarTheme: const AppBarTheme(
+              elevation: 3.3
+            ),
             colorScheme:
                 ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
             fontFamily: "Roboto"),

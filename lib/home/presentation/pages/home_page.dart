@@ -40,198 +40,202 @@ class _HomePageState extends ConsumerState<HomePage> {
       bottomNavigationBar: SizedBox(
         width: double.infinity,
         height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            InkWell(
-              onTap: () {
-                setState(() {
-                  currentIndex = 0;
-                });
-              },
-              child: Column(
-                children: [
-                  Visibility(
-                    visible: currentIndex == 0,
-                    child: Container(
-                      width: 35,
-                      height: 2,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.primaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primaryColor,
-                            blurRadius: 3,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
+        child: Material(
+          color: Colors.white,
+          elevation: 10,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    currentIndex = 0;
+                  });
+                },
+                child: Column(
+                  children: [
+                    Visibility(
+                      visible: currentIndex == 0,
+                      child: Container(
+                        width: 35,
+                        height: 2,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primaryColor,
+                              blurRadius: 3,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Image.asset(
-                    currentIndex == 0
-                        ? "assets/images/home_active.png"
-                        : "assets/images/home_icon.png",
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.fill,
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    "Home",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: currentIndex == 0
-                            ? AppColors.primaryColor
-                            : AppColors.grey2Color),
-                  )
-                ],
+                    const SizedBox(height: 8),
+                    Image.asset(
+                      currentIndex == 0
+                          ? "assets/images/home_active.png"
+                          : "assets/images/home_icon.png",
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.fill,
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      "Home",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: currentIndex == 0
+                              ? AppColors.primaryColor
+                              : AppColors.grey2Color),
+                    )
+                  ],
+                ),
               ),
-            ),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  currentIndex = 1;
-                });
-              },
-              child: Column(
-                children: [
-                  Visibility(
-                    visible: currentIndex == 1,
-                    child: Container(
-                      width: 35,
-                      height: 2,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.primaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primaryColor,
-                            blurRadius: 3,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    currentIndex = 1;
+                  });
+                },
+                child: Column(
+                  children: [
+                    Visibility(
+                      visible: currentIndex == 1,
+                      child: Container(
+                        width: 35,
+                        height: 2,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primaryColor,
+                              blurRadius: 3,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Image.asset(
-                    currentIndex == 1
-                        ? "assets/images/wallet_active.png"
-                        : "assets/images/wallet_icon.png",
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.fill,
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    "Wallet",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: currentIndex == 1
-                            ? AppColors.primaryColor
-                            : AppColors.grey2Color),
-                  )
-                ],
+                    const SizedBox(height: 8),
+                    Image.asset(
+                      currentIndex == 1
+                          ? "assets/images/wallet_active.png"
+                          : "assets/images/wallet_icon.png",
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.fill,
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      "Wallet",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: currentIndex == 1
+                              ? AppColors.primaryColor
+                              : AppColors.grey2Color),
+                    )
+                  ],
+                ),
               ),
-            ),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  currentIndex = 2;
-                });
-              },
-              child: Column(
-                children: [
-                  Visibility(
-                    visible: currentIndex == 2,
-                    child: Container(
-                      width: 35,
-                      height: 2,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.primaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primaryColor,
-                            blurRadius: 3,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    currentIndex = 2;
+                  });
+                },
+                child: Column(
+                  children: [
+                    Visibility(
+                      visible: currentIndex == 2,
+                      child: Container(
+                        width: 35,
+                        height: 2,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primaryColor,
+                              blurRadius: 3,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Image.asset(
-                    currentIndex == 2
-                        ? "assets/images/car_active.png"
-                        : "assets/images/car_icon.png",
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.fill,
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    "Track",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: currentIndex == 2
-                            ? AppColors.primaryColor
-                            : AppColors.grey2Color),
-                  )
-                ],
+                    const SizedBox(height: 8),
+                    Image.asset(
+                      currentIndex == 2
+                          ? "assets/images/car_active.png"
+                          : "assets/images/car_icon.png",
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.fill,
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      "Track",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: currentIndex == 2
+                              ? AppColors.primaryColor
+                              : AppColors.grey2Color),
+                    )
+                  ],
+                ),
               ),
-            ),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  currentIndex = 3;
-                });
-              },
-              child: Column(
-                children: [
-                  Visibility(
-                    visible: currentIndex == 3,
-                    child: Container(
-                      width: 35,
-                      height: 2,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppColors.primaryColor,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.primaryColor,
-                            blurRadius: 3,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    currentIndex = 3;
+                  });
+                },
+                child: Column(
+                  children: [
+                    Visibility(
+                      visible: currentIndex == 3,
+                      child: Container(
+                        width: 35,
+                        height: 2,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.primaryColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primaryColor,
+                              blurRadius: 3,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                  Image.asset(
-                    currentIndex == 3
-                        ? "assets/images/profile_active.png"
-                        : "assets/images/profile_icon.png",
-                    width: 24,
-                    height: 24,
-                    fit: BoxFit.fill,
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    "Profile",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: currentIndex == 3
-                            ? AppColors.primaryColor
-                            : AppColors.grey2Color),
-                  )
-                ],
-              ),
-            )
-          ],
+                    const SizedBox(height: 8),
+                    Image.asset(
+                      currentIndex == 3
+                          ? "assets/images/profile_active.png"
+                          : "assets/images/profile_icon.png",
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.fill,
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      "Profile",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: currentIndex == 3
+                              ? AppColors.primaryColor
+                              : AppColors.grey2Color),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -253,7 +257,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
   late User user;
   int currentTab = 6;
 
-  List pages = ["", SendPackagePage(), "", ""];
+  List pages = [HomePage(0), SendPackagePage(), HomePage(0), HomePage(0)];
 
   @override
   void initState() {
