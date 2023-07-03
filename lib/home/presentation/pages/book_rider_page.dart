@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oech_app/home/data/models/rider_model.dart';
+import 'package:oech_app/home/presentation/pages/rider_profile_page.dart';
 import 'package:oech_app/home/presentation/states/riders_state.dart';
 
 import '../../../core/theme/colors.dart';
@@ -52,7 +53,9 @@ class BookRiderPage extends ConsumerWidget {
               height: 40,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
-                  color: ref.watch(ridersProvider).isColor ? Colors.white : AppColors.grey1Color),
+                  color: ref.watch(ridersProvider).isColor
+                      ? Colors.white
+                      : AppColors.grey1Color),
               child: TextFormField(
                 onChanged: (value) {
                   ref.refresh(getRidersProvider(value)).value;
@@ -76,16 +79,13 @@ class BookRiderPage extends ConsumerWidget {
                   hintStyle:
                       TextStyle(fontSize: 12, color: AppColors.grey2Color),
                   border: OutlineInputBorder(
-                    borderSide: ref.watch(ridersProvider).isColor ? BorderSide(
-                      width: 1,
-                      color: AppColors.grey2Color
-                    ) : BorderSide.none,
+                    borderSide: ref.watch(ridersProvider).isColor
+                        ? BorderSide(width: 1, color: AppColors.grey2Color)
+                        : BorderSide.none,
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        width: 1,
-                        color: AppColors.grey2Color
-                    ),
+                    borderSide:
+                        BorderSide(width: 1, color: AppColors.grey2Color),
                   ),
                 ),
               ),
@@ -95,10 +95,18 @@ class BookRiderPage extends ConsumerWidget {
               child: ref.watch(getRidersProvider(controller.text)).when(
                   data: (value) {
                     return ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RiderProfilePage(
+                                          value[index].regNum)));
+                            },
                             child: Material(
                               elevation: 2,
                               color: Colors.white,
@@ -112,9 +120,12 @@ class BookRiderPage extends ConsumerWidget {
                                       height: 60,
                                       fit: BoxFit.fill,
                                     ),
-                                    const SizedBox(width: 12,),
+                                    const SizedBox(
+                                      width: 12,
+                                    ),
                                     Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
@@ -140,27 +151,35 @@ class BookRiderPage extends ConsumerWidget {
                                       width: 80,
                                       child: ListView.builder(
                                         scrollDirection: Axis.horizontal,
-                                        physics: const NeverScrollableScrollPhysics(),
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
                                         itemCount: 5,
                                         itemBuilder: (context, curIndex) {
-                                          return int.parse(data[index].rate) > curIndex
-                                                ? Padding(
-                                                  padding: EdgeInsets.only(right: curIndex == 4 ? 0 : 8.26),
+                                          return int.parse(data[index].rate) >
+                                                  curIndex
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: curIndex == 4
+                                                          ? 0
+                                                          : 8.26),
                                                   child: Image.asset(
-                                              "assets/images/star_icon_active.png",
-                                              width: 9,
-                                              height: 9,
-                                              fit: BoxFit.fill,
-                                            ),
+                                                    "assets/images/star_icon_active.png",
+                                                    width: 9,
+                                                    height: 9,
+                                                    fit: BoxFit.fill,
+                                                  ),
                                                 )
-                                                : Padding(
-                                                  padding: EdgeInsets.only(right: curIndex == 4 ? 0 : 8.26),
+                                              : Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: curIndex == 4
+                                                          ? 0
+                                                          : 8.26),
                                                   child: Image.asset(
-                                              "assets/images/star_icon.png",
-                                              width: 9,
-                                              height: 9,
-                                              fit: BoxFit.fill,
-                                          ),
+                                                    "assets/images/star_icon.png",
+                                                    width: 9,
+                                                    height: 9,
+                                                    fit: BoxFit.fill,
+                                                  ),
                                                 );
                                         },
                                       ),
@@ -169,8 +188,9 @@ class BookRiderPage extends ConsumerWidget {
                                 ),
                               ),
                             ),
-                          );
-                        },
+                          ),
+                        );
+                      },
                     );
                   },
                   error: (error, stacktrace) {

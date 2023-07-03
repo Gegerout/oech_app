@@ -206,4 +206,11 @@ class RemoteData {
     final List<RiderModel> models = riders.map((value) => RiderModel.fromJson(value)).toList();
     return models;
   }
+
+  Future<RiderModel> getRider(String regNum) async {
+    final supabase = Supabase.instance.client;
+    final List riders = await supabase.from("riders").select("*").eq("reg_num", regNum);
+    final model = RiderModel.fromJson(riders[0]);
+    return model;
+  }
 }
