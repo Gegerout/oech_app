@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:oech_app/home/data/models/order_model.dart';
+import 'package:oech_app/home/data/models/rider_model.dart';
 import 'package:oech_app/home/data/models/user_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -197,5 +198,12 @@ class RemoteData {
       "rate": data
     }).eq(
         "track", track);
+  }
+
+  Future<List<RiderModel>> getRiders() async {
+    final supabase = Supabase.instance.client;
+    final List riders = await supabase.from("riders").select("*").order("id", ascending: true);
+    final List<RiderModel> models = riders.map((value) => RiderModel.fromJson(value)).toList();
+    return models;
   }
 }
