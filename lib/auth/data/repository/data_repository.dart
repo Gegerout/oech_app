@@ -1,6 +1,6 @@
 import 'package:gotrue/src/types/user.dart';
 import 'package:oech_app/auth/data/data_sources/local_data.dart';
-import 'package:oech_app/auth/data/data_sources/remote_data.dart';
+import 'package:oech_app/auth/data/data_sources/remote_storage.dart';
 import 'package:oech_app/auth/data/models/user_model.dart';
 import 'package:oech_app/auth/domain/repository/repository_impl.dart';
 import 'package:oech_app/auth/domain/usecases/user_usecase.dart';
