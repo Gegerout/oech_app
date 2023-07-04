@@ -134,9 +134,16 @@ class CallPage extends ConsumerWidget {
           },
           error: (error, stacktrace) {
             return Scaffold(
-              body: Center(
-                child: Text(error.toString()),
-              ),
+              body: AlertDialog(
+                title: Text(error.toString()),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Ok"))
+                ],
+              )
             );
           },
           loading: () => const Scaffold(
