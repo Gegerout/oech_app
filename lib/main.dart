@@ -47,6 +47,7 @@ class MyApp extends ConsumerWidget {
                 ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
             fontFamily: "Roboto"),
         home: StreamBuilder(
+          stream: networkStatus.controller.stream,
           builder: (context, snapshot) {
             if(snapshot.data == NetworkStatus.offline) {
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
