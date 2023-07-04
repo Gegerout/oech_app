@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:oech_app/core/widgets/buttons.dart';
 import 'package:oech_app/home/presentation/pages/call_page.dart';
+import 'package:oech_app/home/presentation/pages/rider_chat_page.dart';
 import 'package:oech_app/home/presentation/states/riders_state.dart';
 
 import '../../../core/theme/colors.dart';
@@ -363,8 +364,14 @@ class _RiderProfilePageState extends ConsumerState<RiderProfilePage> {
                               SizedBox(
                                   width: 164,
                                   height: 48,
-                                  child: primaryButton("Send message", () {},
-                                      FontWeight.w700, 16)),
+                                  child: primaryButton("Send message", () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => RiderChatPage(
+                                                  regNum: value.$2.regNum,
+                                                )));
+                                  }, FontWeight.w700, 16)),
                               SizedBox(
                                   width: 164,
                                   height: 48,

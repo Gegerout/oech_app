@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oech_app/core/states/main_state.dart';
 import 'package:oech_app/core/theme/colors.dart';
+import 'package:oech_app/home/data/data_sources/remote_data.dart';
 import 'package:oech_app/home/presentation/pages/home_page.dart';
 import 'package:oech_app/onboarding/presentation/pages/onboarding_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
-
 import 'auth/presentation/pages/signup_page.dart';
+import 'package:provider/provider.dart' as provider;
 
 Future<void> main() async {
   await Supabase.initialize(
       url: "https://feyqfihsyhchwsjseqsg.supabase.co",
       anonKey:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZleXFmaWhzeWhjaHdzanNlcXNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODc4ODQ0NjQsImV4cCI6MjAwMzQ2MDQ2NH0.iIjNJGoJ08Gyqo8C1OHG3nHw7CtNRFtGmcLQq10qTxo");
-  runApp(ProviderScope(child: MyApp()));
+  runApp(provider.MultiProvider(providers: [
+    provider.ChangeNotifierProvider<RemoteData>(
+      create: (_) => RemoteData(),
+    )
+  ], child: ProviderScope(child: MyApp())));
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) return stack.vmTrace;
     if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;

@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
@@ -52,6 +50,7 @@ class ridersNotifier extends ChangeNotifier {
 
   void changeFocus(bool focus) async {
     isColor = focus;
+    notifyListeners();
   }
 
   void changeView() {

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:oech_app/home/data/models/order_model.dart';
 import 'package:oech_app/home/data/models/rider_model.dart';
 import 'package:oech_app/home/data/models/user_model.dart';
@@ -7,10 +8,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/images_model.dart';
+import '../models/message_model.dart';
 
-class RemoteData {
+class RemoteData extends ChangeNotifier {
+  final supabase = Supabase.instance.client;
+
   Future<List<ImagesModel>> getImages() async {
-    final supabase = Supabase.instance.client;
     final data = await supabase
         .from("asset_images")
         .select("*")
@@ -20,7 +23,6 @@ class RemoteData {
   }
 
   Future<UserModel> getUserData() async {
-    final supabase = Supabase.instance.client;
     final name = await supabase
         .from("users")
         .select("name")
@@ -53,7 +55,6 @@ class RemoteData {
   }
 
   Future<void> updateBalance(String balance) async {
-    final supabase = Supabase.instance.client;
     await supabase.from("users").update({"balance": balance}).eq(
         "email", supabase.auth.currentUser!.email);
   }
@@ -64,12 +65,10 @@ class RemoteData {
     if (file.existsSync()) {
       file.deleteSync();
     }
-    final supabase = Supabase.instance.client;
     await supabase.auth.signOut();
   }
 
   Future<void> createOrder(OrderModel data) async {
-    final supabase = Supabase.instance.client;
     final List isDone =
         await supabase.from("orders").select("track").eq("track", data.track);
     if (isDone.isNotEmpty) {
@@ -93,7 +92,6 @@ class RemoteData {
   }
 
   Future<OrderModel> getOrder(String track) async {
-    final supabase = Supabase.instance.client;
     List origins = [];
     origins = await supabase
         .from("orders")
@@ -126,7 +124,6 @@ class RemoteData {
   }
 
   Future<List<String>> getOrders() async {
-    final supabase = Supabase.instance.client;
     final List orders = await supabase
         .from("orders")
         .select("track")
@@ -140,13 +137,11 @@ class RemoteData {
   }
 
   Future<void> createTransaction(List data) async {
-    final supabase = Supabase.instance.client;
     await supabase.from("users").update({"transactions": data}).eq(
         "email", supabase.auth.currentUser!.email!);
   }
 
   Future<void> setOrderState(List data, String track) async {
-    final supabase = Supabase.instance.client;
     await supabase
         .from("orders")
         .update({"state": data, "updated_at": DateTime.now().toString()}).eq(
@@ -154,7 +149,6 @@ class RemoteData {
   }
 
   Future<OrderModel> getOrderDetails(String track) async {
-    final supabase = Supabase.instance.client;
     List origins = [];
     origins = await supabase
         .from("orders")
@@ -191,7 +185,6 @@ class RemoteData {
   }
 
   Future<void> rateDrive(List data, String track) async {
-    final supabase = Supabase.instance.client;
     await supabase
         .from("orders")
         .update({
@@ -201,16 +194,38 @@ class RemoteData {
   }
 
   Future<List<RiderModel>> getRiders() async {
-    final supabase = Supabase.instance.client;
     final List riders = await supabase.from("riders").select("*").order("id", ascending: true);
     final List<RiderModel> models = riders.map((value) => RiderModel.fromJson(value)).toList();
     return models;
   }
 
   Future<RiderModel> getRider(String regNum) async {
-    final supabase = Supabase.instance.client;
     final List riders = await supabase.from("riders").select("*").eq("reg_num", regNum);
     final model = RiderModel.fromJson(riders[0]);
     return model;
   }
+
+  Stream<List<Message>> getMessages(String regNum) {
+    return supabase
+        .from('message')
+        .stream(primaryKey: ['id'])
+        .order('created_at')
+    .eq("reg_num", regNum)
+    .execute()
+        .map((maps) => maps
+        .map((item) => Message.fromJson(item, getCurrentUserEmail()))
+        .toList());
+  }
+
+  Future<void> saveMessage(String content, String regNum) async {
+    final message = Message.create(
+        content: content, userFrom: getCurrentUserEmail(), userTo: regNum, regNum: regNum);
+
+    await supabase.from('message').insert(message.toMap()).execute();
+  }
+
+  bool isAuthenticated() => supabase.auth.currentUser != null;
+
+  String getCurrentUserEmail() =>
+      isAuthenticated() ? supabase.auth.currentUser!.email! : '';
 }

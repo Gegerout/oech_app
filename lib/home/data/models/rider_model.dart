@@ -7,14 +7,15 @@ class RiderModel {
   final String gender;
   final String car;
   final String phone;
+  final String status;
 
   factory RiderModel.fromJson(Map<String, dynamic> json) {
     return RiderModel(json["avatar"], json["name"], json["reg_num"],
-        json["rate"], json["gender"], json["car"], json["phone"], feedbacks: json["feedbacks"]);
+        json["rate"], json["gender"], json["car"], json["phone"], json["status"], feedbacks: json["feedbacks"]);
   }
 
   RiderModel(this.avatar, this.name, this.regNum, this.rate,
-      this.gender, this.car, this.phone, {this.feedbacks});
+      this.gender, this.car, this.phone, this.status, {this.feedbacks});
 
   Map<String, dynamic> toJson() => {
     "avatar": avatar,
@@ -24,6 +25,7 @@ class RiderModel {
     "feedbacks": feedbacks,
     "gender": gender,
     "car": car,
-    "phone": phone
+    "phone": phone,
+    "status": status
   };
 }
