@@ -384,289 +384,313 @@ class ConfirmOrderPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.refresh(orderProvider(track)).value;
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 63,
-        backgroundColor: Colors.white,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15),
-          child: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Image.asset(
-              "assets/images/arrow-square-right.png",
-              width: 24,
-              height: 24,
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),
-        centerTitle: true,
-        title: Text(
-          "Send a package",
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: AppColors.grey2Color),
-        ),
-      ),
-      body: ref.watch(orderProvider(track)).when(
-          data: (value) {
-            List data = value.state ?? [false, false, false, false];
-            return Padding(
-              padding: const EdgeInsets.only(left: 24, right: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 24),
-                  Text(
-                    "Package Information",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: AppColors.primaryColor),
+    ref
+        .refresh(orderProvider(track))
+        .value;
+
+    return ref.watch(orderProvider(track)).when(
+        data: (value) {
+          List data = value.state ?? [false, false, false, false];
+          return Scaffold(
+              appBar: AppBar(
+                toolbarHeight: 63,
+                backgroundColor: Colors.white,
+                leading: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Image.asset(
+                      "assets/images/arrow-square-right.png",
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Origin details",
-                    style: TextStyle(fontSize: 12, color: AppColors.textColor),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "${value.origins[0]}, ${value.origins[1].toString().split(",")[0]}",
-                    style: TextStyle(fontSize: 12, color: AppColors.grey2Color),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    value.origins[2],
-                    style: TextStyle(fontSize: 12, color: AppColors.grey2Color),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Destination details",
-                    style: TextStyle(fontSize: 12, color: AppColors.textColor),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "${value.destinations[0]}, ${value.destinations[1].toString().split(",")[0]}",
-                    style: TextStyle(fontSize: 12, color: AppColors.grey2Color),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    value.destinations[2],
-                    style: TextStyle(fontSize: 12, color: AppColors.grey2Color),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Other details",
-                    style: TextStyle(fontSize: 12, color: AppColors.textColor),
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Package items",
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.grey2Color),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "Weight of items",
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.grey2Color),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "Tracking number",
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.grey2Color),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            value.packages[0],
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.secondaryColor),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            value.packages[1],
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.secondaryColor),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            value.track,
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.secondaryColor),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 37),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Divider(thickness: 1, color: AppColors.grey2Color),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Charges",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                        color: AppColors.primaryColor),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Delivery Charges",
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.grey2Color),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "Instant delivery",
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.grey2Color),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "Tax and Service Charges",
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.grey2Color),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            "N2,500.00",
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.secondaryColor),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "N300.00",
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.secondaryColor),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            "N200.00",
-                            style: TextStyle(
-                                fontSize: 12, color: AppColors.secondaryColor),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 9),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Divider(thickness: 1, color: AppColors.grey2Color),
-                  ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      Text(
-                        "Package total",
-                        style: TextStyle(
-                            fontSize: 12, color: AppColors.grey2Color),
-                      ),
-                      const Spacer(),
-                      Text(
-                        "N3000.00",
-                        style: TextStyle(
-                            fontSize: 12, color: AppColors.secondaryColor),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: data[3] ? 24 : 46),
-                  data[3]
-                      ? Column(
+                ),
+                centerTitle: true,
+                title: Text(
+                  data[3] ? "Package Delivered" : "Send a package",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.grey2Color),
+                ),
+              ),
+              body: Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 24),
+                    Text(
+                      "Package Information",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: AppColors.primaryColor),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Origin details",
+                      style:
+                      TextStyle(fontSize: 12, color: AppColors.textColor),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "${value.origins[0]}, ${value.origins[1].toString().split(
+                          ",")[0]}",
+                      style:
+                      TextStyle(fontSize: 12, color: AppColors.grey2Color),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      value.origins[2],
+                      style:
+                      TextStyle(fontSize: 12, color: AppColors.grey2Color),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Destination details",
+                      style:
+                      TextStyle(fontSize: 12, color: AppColors.textColor),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      "${value.destinations[0]}, ${value.destinations[1]
+                          .toString()
+                          .split(",")[0]}",
+                      style:
+                      TextStyle(fontSize: 12, color: AppColors.grey2Color),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      value.destinations[2],
+                      style:
+                      TextStyle(fontSize: 12, color: AppColors.grey2Color),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Other details",
+                      style:
+                      TextStyle(fontSize: 12, color: AppColors.textColor),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Click on  delivered for successful delivery and rate rider or report missing item",
+                              "Package items",
                               style: TextStyle(
-                                  fontSize: 12, color: AppColors.primaryColor),
+                                  fontSize: 12, color: AppColors.grey2Color),
                             ),
-                            const SizedBox(height: 41),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                    width: 168,
-                                    height: 48,
-                                    child: secondaryButtonSmall(
-                                        "Report", () {}, FontWeight.w700, 16)),
-                                const SizedBox(
-                                  width: 24,
-                                ),
-                                SizedBox(
-                                    width: 168,
-                                    height: 48,
-                                    child: primaryButtonSmall("Successful", () {
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DeliverySuccessPage(track)),
-                                          (route) => false);
-                                    }, FontWeight.w700, 16))
-                              ],
-                            )
+                            const SizedBox(height: 8),
+                            Text(
+                              "Weight of items",
+                              style: TextStyle(
+                                  fontSize: 12, color: AppColors.grey2Color),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              "Tracking number",
+                              style: TextStyle(
+                                  fontSize: 12, color: AppColors.grey2Color),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              value.packages[0],
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.secondaryColor),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              value.packages[1],
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.secondaryColor),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              value.track,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.secondaryColor),
+                            ),
                           ],
                         )
-                      : Row(
+                      ],
+                    ),
+                    const SizedBox(height: 37),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Divider(thickness: 1, color: AppColors.grey2Color),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Charges",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                          color: AppColors.primaryColor),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Delivery Charges",
+                              style: TextStyle(
+                                  fontSize: 12, color: AppColors.grey2Color),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              "Instant delivery",
+                              style: TextStyle(
+                                  fontSize: 12, color: AppColors.grey2Color),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              "Tax and Service Charges",
+                              style: TextStyle(
+                                  fontSize: 12, color: AppColors.grey2Color),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              "N2,500.00",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.secondaryColor),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              "N300.00",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.secondaryColor),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              "N200.00",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: AppColors.secondaryColor),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 9),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Divider(thickness: 1, color: AppColors.grey2Color),
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Text(
+                          "Package total",
+                          style: TextStyle(
+                              fontSize: 12, color: AppColors.grey2Color),
+                        ),
+                        const Spacer(),
+                        Text(
+                          "N3000.00",
+                          style: TextStyle(
+                              fontSize: 12, color: AppColors.secondaryColor),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: data[3] ? 24 : 46),
+                    data[3]
+                        ? Column(
+                      children: [
+                        Text(
+                          "Click on  delivered for successful delivery and rate rider or report missing item",
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.primaryColor),
+                        ),
+                        const SizedBox(height: 41),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SizedBox(
                                 width: 168,
                                 height: 48,
-                                child: secondaryButtonSmall("Edit package", () {
-                                  ref.refresh(orderProvider(track)).value;
-                                  Navigator.pop(context);
-                                }, FontWeight.w700, 16)),
+                                child: secondaryButtonSmall("Report",
+                                        () {}, FontWeight.w700, 16)),
                             const SizedBox(
                               width: 24,
                             ),
                             SizedBox(
                                 width: 168,
                                 height: 48,
-                                child: primaryButtonSmall("Make payment", () {
+                                child:
+                                primaryButtonSmall("Successful", () {
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              SuccessfulTransactionPage(
-                                                track: value.track,
-                                              )),
-                                      (route) => false);
+                                              DeliverySuccessPage(track)),
+                                          (route) => false);
                                 }, FontWeight.w700, 16))
                           ],
                         )
-                ],
-              ),
-            );
-          },
-          error: (error, stacktrace) {
-            return Scaffold(
+                      ],
+                    )
+                        : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            width: 168,
+                            height: 48,
+                            child:
+                            secondaryButtonSmall("Edit package", () {
+                              ref
+                                  .refresh(orderProvider(track))
+                                  .value;
+                              Navigator.pop(context);
+                            }, FontWeight.w700, 16)),
+                        const SizedBox(
+                          width: 24,
+                        ),
+                        SizedBox(
+                            width: 168,
+                            height: 48,
+                            child: primaryButtonSmall("Make payment", () {
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SuccessfulTransactionPage(
+                                            track: value.track,
+                                          )),
+                                      (route) => false);
+                            }, FontWeight.w700, 16))
+                      ],
+                    )
+                  ],
+                ),
+              ));
+        },
+        error: (error, stacktrace) {
+          return Scaffold(
               body: AlertDialog(
                 title: Text(error.toString()),
                 actions: [
@@ -676,14 +700,14 @@ class ConfirmOrderPage extends ConsumerWidget {
                       },
                       child: const Text("Ok"))
                 ],
-              )
-            );
-          },
-          loading: () => const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              )),
+              ));
+        },
+        loading: () =>
+        const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        )
     );
   }
 }
