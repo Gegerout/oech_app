@@ -108,20 +108,21 @@ class _RiderChatPageState extends ConsumerState<RiderChatPage> {
               );
             },
             error: (error, stacktrace) {
-              return Scaffold(
-                body: AlertDialog(
-                  title: Text(error.toString()),
-                  actions: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text("Ok"))
-                  ],
-                )
+              return AlertDialog(
+                title: Text(error.toString()),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Ok"))
+                ],
               );
             },
-            loading: () => Scaffold(body: Container())),
+            loading: () => Text(
+                  "Loading...",
+                  style: TextStyle(fontSize: 14, color: AppColors.primaryColor),
+                )),
         actions: [
           IconButton(
             onPressed: () {
@@ -227,15 +228,15 @@ class _RiderChatPageState extends ConsumerState<RiderChatPage> {
                         width: 1,
                       ),
                       InkWell(
-                        onTap: () {
-                          _submit(appService);
-                        },
+                          onTap: () {
+                            _submit(appService);
+                          },
                           child: Image.asset(
-                        "assets/images/send_icon.png",
-                        width: 42,
-                        height: 42,
-                        fit: BoxFit.fill,
-                      )),
+                            "assets/images/send_icon.png",
+                            width: 42,
+                            height: 42,
+                            fit: BoxFit.fill,
+                          )),
                     ],
                   ),
                   const SizedBox(height: 10.0)
