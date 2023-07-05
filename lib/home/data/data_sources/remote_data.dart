@@ -144,7 +144,7 @@ class RemoteData extends ChangeNotifier {
         .eq("email", supabase.auth.currentUser!.email!);
     List? transactions = response[0]["transactions"];
     if(transactions != null) {
-      newValue.add(transactions);
+      newValue.add(transactions[0]);
     }
     newValue.add(data);
     await supabase.from("users").update({"transactions": newValue}).eq(
