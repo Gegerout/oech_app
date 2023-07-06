@@ -238,10 +238,10 @@ class SigninPage extends ConsumerWidget {
                         ref
                             .read(signinProvider.notifier)
                             .loginUserGoogle();
-                        Navigator.pushAndRemoveUntil(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => const LoadingPage()),
-                                (route) => false);
+                        );
                       },
                       child: Image.asset(
                         "assets/images/google_icon.png",
