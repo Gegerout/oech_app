@@ -133,8 +133,7 @@ class CallPage extends ConsumerWidget {
             );
           },
           error: (error, stacktrace) {
-            return Scaffold(
-              body: AlertDialog(
+            return AlertDialog(
                 title: Text(error.toString()),
                 actions: [
                   ElevatedButton(
@@ -143,14 +142,12 @@ class CallPage extends ConsumerWidget {
                       },
                       child: const Text("Ok"))
                 ],
-              )
             );
           },
-          loading: () => const Scaffold(
-                body: Center(
+          loading: () => const Center(
                   child: CircularProgressIndicator(),
                 ),
-              )),
+              ),
     );
   }
 }
