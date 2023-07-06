@@ -181,7 +181,7 @@ class WalletPage extends ConsumerWidget {
                         color: AppColors.textColor),
                   ),
                   const SizedBox(height: 24),
-                  Expanded(
+                  value.transactions != null ? Expanded(
                     child: ListView.builder(
                       itemCount: value.transactions?.length,
                       itemBuilder: (context, index) {
@@ -237,7 +237,7 @@ class WalletPage extends ConsumerWidget {
                         );
                       },
                     ),
-                  )
+                  ) : Container()
                 ],
               ),
             ),

@@ -273,6 +273,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
   Widget build(BuildContext context) {
     final data = ref.watch(homeProvider).data;
     user = supabase.auth.currentUser!;
+    ref.read(homeProvider.notifier).getUser();
     ref.read(homeProvider.notifier).getOrders();
 
     return Scaffold(
@@ -324,7 +325,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Hello ${user.userMetadata?["name"]}",
+                                "Hello ${ref.watch(homeProvider).name}",
                                 style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 24,

@@ -2,10 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:oech_app/core/widgets/buttons.dart';
 import 'package:oech_app/home/presentation/pages/delivery_success_page.dart';
 import 'package:oech_app/home/presentation/pages/succesful_transaction_page.dart';
 import 'package:oech_app/home/presentation/states/send_package_state.dart';
+import 'package:oech_app/home/presentation/states/wallet_state.dart';
 import 'package:oech_app/home/presentation/widgets/destination_card_widget.dart';
 import 'package:oech_app/home/presentation/widgets/package_text_field.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -650,6 +652,11 @@ class ConfirmOrderPage extends ConsumerWidget {
                                 width: 168,
                                 height: 48,
                                 child: primaryButtonSmall("Make payment", () {
+                                  ref.read(walletDataProvider.notifier).createTransactions([
+                                    "Delivery fee",
+                                  "${DateFormat.yMMMMd().format(DateTime.now()).split(",")[0]},${DateFormat.yMMMMd().format(DateTime.now()).split(",")[1]}",
+                                    "-N3,000.00"
+                                  ],);
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
@@ -666,8 +673,7 @@ class ConfirmOrderPage extends ConsumerWidget {
             );
           },
           error: (error, stacktrace) {
-            return Scaffold(
-              body: AlertDialog(
+            return AlertDialog(
                 title: Text(error.toString()),
                 actions: [
                   ElevatedButton(
@@ -676,13 +682,10 @@ class ConfirmOrderPage extends ConsumerWidget {
                       },
                       child: const Text("Ok"))
                 ],
-              )
-            );
+              );
           },
-          loading: () => const Scaffold(
-                body: Center(
+          loading: () => const  Center(
                   child: CircularProgressIndicator(),
-                ),
               )),
     );
   }

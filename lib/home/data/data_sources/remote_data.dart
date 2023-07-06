@@ -137,7 +137,17 @@ class RemoteData extends ChangeNotifier {
   }
 
   Future<void> createTransaction(List data) async {
-    await supabase.from("users").update({"transactions": data}).eq(
+    List newValue = [];
+    final response = await supabase
+        .from("users")
+        .select("transactions")
+        .eq("email", supabase.auth.currentUser!.email!);
+    List? transactions = response[0]["transactions"];
+    if(transactions != null) {
+      newValue.add(transactions[0]);
+    }
+    newValue.add(data);
+    await supabase.from("users").update({"transactions": newValue}).eq(
         "email", supabase.auth.currentUser!.email!);
   }
 
@@ -185,22 +195,20 @@ class RemoteData extends ChangeNotifier {
   }
 
   Future<void> rateDrive(List data, String track) async {
-    await supabase
-        .from("orders")
-        .update({
-      "rate": data
-    }).eq(
-        "track", track);
+    await supabase.from("orders").update({"rate": data}).eq("track", track);
   }
 
   Future<List<RiderModel>> getRiders() async {
-    final List riders = await supabase.from("riders").select("*").order("id", ascending: true);
-    final List<RiderModel> models = riders.map((value) => RiderModel.fromJson(value)).toList();
+    final List riders =
+        await supabase.from("riders").select("*").order("id", ascending: true);
+    final List<RiderModel> models =
+        riders.map((value) => RiderModel.fromJson(value)).toList();
     return models;
   }
 
   Future<RiderModel> getRider(String regNum) async {
-    final List riders = await supabase.from("riders").select("*").eq("reg_num", regNum);
+    final List riders =
+        await supabase.from("riders").select("*").eq("reg_num", regNum);
     final model = RiderModel.fromJson(riders[0]);
     return model;
   }
@@ -210,16 +218,19 @@ class RemoteData extends ChangeNotifier {
         .from('message')
         .stream(primaryKey: ['id'])
         .order('created_at')
-    .eq("reg_num", regNum)
-    .execute()
+        .eq("reg_num", "$regNum ${supabase.auth.currentUser!.email!}")
+        .execute()
         .map((maps) => maps
-        .map((item) => Message.fromJson(item, getCurrentUserEmail()))
-        .toList());
+            .map((item) => Message.fromJson(item, getCurrentUserEmail()))
+            .toList());
   }
 
   Future<void> saveMessage(String content, String regNum) async {
     final message = Message.create(
-        content: content, userFrom: getCurrentUserEmail(), userTo: regNum, regNum: regNum);
+        content: content,
+        userFrom: getCurrentUserEmail(),
+        userTo: regNum,
+        regNum: "$regNum ${supabase.auth.currentUser!.email!}");
 
     await supabase.from('message').insert(message.toMap()).execute();
   }

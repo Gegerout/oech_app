@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:oech_app/home/data/models/user_model.dart';
 import '../../data/repository/data_repository.dart';
 
 final imagesProvider = FutureProvider((ref) async {
@@ -13,6 +13,7 @@ final homeProvider = ChangeNotifierProvider((ref) => homeNotifier());
 
 class homeNotifier extends ChangeNotifier {
   List orders = [];
+  String name = "";
 
   List data = [
     [
@@ -44,6 +45,12 @@ class homeNotifier extends ChangeNotifier {
   void getOrders() async {
     final data = await DataRepository().getOrders();
     orders = data;
+    notifyListeners();
+  }
+
+  void getUser() async {
+    final data = await DataRepository().getUserData();
+    name = data.data.name;
     notifyListeners();
   }
 }
