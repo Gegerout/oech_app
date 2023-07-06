@@ -296,10 +296,10 @@ class SignupPage extends ConsumerWidget {
                   child: InkWell(
                       onTap: () {
                         ref.read(signupProvider.notifier).loginUserGoogle();
-                        Navigator.pushAndRemoveUntil(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => const LoadingPage()),
-                            (route) => false);
+                        );
                       },
                       child: Image.asset(
                         "assets/images/google_icon.png",
