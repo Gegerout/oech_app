@@ -376,8 +376,15 @@ class _SendPackagePageState extends ConsumerState<SendPackagePage> {
                 );
               },
               error: (error, stacktrace) {
-                return Center(
-                    child: Text(error.toString()),
+                return AlertDialog(
+                  title: Text(error.toString()),
+                  actions: [
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Ok"))
+                  ],
                 );
               },
               loading: () => const Center(
@@ -624,8 +631,7 @@ class ConfirmOrderPage extends ConsumerWidget {
             );
           },
           error: (error, stacktrace) {
-            return Scaffold(
-              body: AlertDialog(
+            return AlertDialog(
                 title: Text(error.toString()),
                 actions: [
                   ElevatedButton(
@@ -634,13 +640,10 @@ class ConfirmOrderPage extends ConsumerWidget {
                       },
                       child: const Text("Ok"))
                 ],
-              )
             );
           },
-          loading: () => const Scaffold(
-                body: Center(
+          loading: () => const Center(
                   child: CircularProgressIndicator(),
-                ),
               )),
     );
   }
