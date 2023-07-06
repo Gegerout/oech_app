@@ -10,7 +10,10 @@ import 'package:oech_app/home/data/repository/data_repository.dart';
 final positionProvider = FutureProvider.family<(Position, OrderModel, List<LatLng>), String>((ref, track) async {
   final data = await DataRepository().getOrderDetails(track);
   List<LatLng> routpoints = [];
-  LocationPermission permission = await Geolocator.requestPermission();
+  LocationPermission isPermission = await Geolocator.checkPermission();
+  if(isPermission == LocationPermission.denied) {
+    await Geolocator.requestPermission();
+  }
   final position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   var url = Uri.parse('http://router.project-osrm.org/route/v1/driving/${position.longitude},${position.latitude};${position.longitude + 0.01},${position.latitude + 0.01}?steps=true&annotations=true&geometries=geojson&overview=full');
   var response = await http.get(url);
