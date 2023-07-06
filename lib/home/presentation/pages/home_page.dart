@@ -195,8 +195,15 @@ class _HomePageState extends ConsumerState<HomePage> {
                       );
                     },
                     error: (error, stacktrace) {
-                      return Center(
-                        child: Text(error.toString()),
+                      return AlertDialog(
+                        title: Text(error.toString()),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text("Ok"))
+                        ],
                       );
                     },
                     loading: () => const Center(
