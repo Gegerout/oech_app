@@ -418,8 +418,7 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                   );
                 },
                 error: (error, stacktrace) {
-                  return Scaffold(
-                    body: AlertDialog(
+                  return AlertDialog(
                       title: Text(error.toString()),
                       actions: [
                         ElevatedButton(
@@ -428,13 +427,11 @@ class _TrackPageState extends ConsumerState<TrackPage> {
                             },
                             child: const Text("Ok"))
                       ],
-                    )
                   );
                 },
-                loading: () => const Scaffold(
-                      body: Center(
+                loading: () => const Center(
                         child: CircularProgressIndicator(),
                       ),
-                    )));
+            ));
   }
 }
