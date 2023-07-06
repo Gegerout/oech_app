@@ -12,6 +12,7 @@ import 'auth/presentation/pages/signup_page.dart';
 import 'core/states/network_state.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Supabase.initialize(
       url: "https://feyqfihsyhchwsjseqsg.supabase.co",
       anonKey:

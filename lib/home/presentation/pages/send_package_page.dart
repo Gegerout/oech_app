@@ -60,6 +60,7 @@ class _SendPackagePageState extends ConsumerState<SendPackagePage> {
   Widget build(BuildContext context) {
     int currentIndex = ref.watch(sendPackageProvider).currentIndex;
     List data = ref.watch(sendPackageProvider).data;
+    ref.refresh(addressProvider).value;
     final supabase = Supabase.instance.client;
 
     return Scaffold(
@@ -90,205 +91,210 @@ class _SendPackagePageState extends ConsumerState<SendPackagePage> {
               color: AppColors.grey2Color),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 24, right: 24),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 43),
-              Row(
-                children: [
-                  Image.asset(
-                    "assets/images/origin_icon.png",
-                    width: 16,
-                    height: 16,
-                    fit: BoxFit.fill,
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "Origin Details",
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textColor),
-                  )
-                ],
-              ),
-              const SizedBox(height: 5),
-              packageTextField("Address", (value) {
-                ref.read(sendPackageProvider.notifier).checkCreds(
-                    address1.text,
-                    state1.text,
-                    phone1.text,
-                    address2.text,
-                    state2.text,
-                    phone2.text,
-                    items.text,
-                    weight.text,
-                    worth.text);
-              }, TextInputType.text, controller: address1),
-              const SizedBox(height: 5),
-              packageTextField("State,Country", (value) {
-                ref.read(sendPackageProvider.notifier).checkCreds(
-                    address1.text,
-                    state1.text,
-                    phone1.text,
-                    address2.text,
-                    state2.text,
-                    phone2.text,
-                    items.text,
-                    weight.text,
-                    worth.text);
-              }, TextInputType.text, controller: state1),
-              const SizedBox(height: 5),
-              packageTextField("Phone number", (value) {
-                ref.read(sendPackageProvider.notifier).checkCreds(
-                    address1.text,
-                    state1.text,
-                    phone1.text,
-                    address2.text,
-                    state2.text,
-                    phone2.text,
-                    items.text,
-                    weight.text,
-                    worth.text);
-              }, TextInputType.phone, controller: phone1),
-              const SizedBox(height: 5),
-              packageTextField("Others", (value) {
-                ref.read(sendPackageProvider.notifier).checkCreds(
-                    address1.text,
-                    state1.text,
-                    phone1.text,
-                    address2.text,
-                    state2.text,
-                    phone2.text,
-                    items.text,
-                    weight.text,
-                    worth.text);
-              }, TextInputType.text),
-              const SizedBox(height: 5),
-              SizedBox(
-                height: 210.0 * ref.watch(sendPackageProvider).count,
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: ref.watch(sendPackageProvider).count,
-                  itemBuilder: (context, index) {
-                    return destinationCardWidget(address2, state2, phone2,
-                        (value) {
-                      ref.read(sendPackageProvider.notifier).checkCreds(
-                          address1.text,
-                          state1.text,
-                          phone1.text,
-                          address2.text,
-                          state2.text,
-                          phone2.text,
-                          items.text,
-                          weight.text,
-                          worth.text);
-                    }, index);
-                  },
-                ),
-              ),
-              const SizedBox(height: 17),
-              InkWell(
-                onTap: () {
-                  ref.read(sendPackageProvider.notifier).addCount();
-                },
-                child: Row(
-                  children: [
-                    Image.asset(
-                      "assets/images/add-square.png",
-                      width: 14,
-                      height: 14,
-                      fit: BoxFit.fill,
-                    ),
-                    const SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      "Add destination",
-                      style:
-                          TextStyle(fontSize: 12, color: AppColors.grey2Color),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(height: 13),
-              Text(
-                "Package Details",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textColor),
-              ),
-              const SizedBox(height: 8),
-              packageTextField("package items", (value) {
-                ref.read(sendPackageProvider.notifier).checkCreds(
-                    address1.text,
-                    state1.text,
-                    phone1.text,
-                    address2.text,
-                    state2.text,
-                    phone2.text,
-                    items.text,
-                    weight.text,
-                    worth.text);
-              }, TextInputType.text, controller: items),
-              const SizedBox(height: 8),
-              packageTextField("Weight of item(kg)", (value) {
-                ref.read(sendPackageProvider.notifier).checkCreds(
-                    address1.text,
-                    state1.text,
-                    phone1.text,
-                    address2.text,
-                    state2.text,
-                    phone2.text,
-                    items.text,
-                    weight.text,
-                    worth.text);
-              }, TextInputType.text, controller: weight),
-              const SizedBox(height: 8),
-              packageTextField("Worth of Items", (value) {
-                ref.read(sendPackageProvider.notifier).checkCreds(
-                    address1.text,
-                    state1.text,
-                    phone1.text,
-                    address2.text,
-                    state2.text,
-                    phone2.text,
-                    items.text,
-                    weight.text,
-                    worth.text);
-              }, TextInputType.text, controller: worth),
-              const SizedBox(height: 39),
-              Text("Select delivery type",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textColor)),
-              const SizedBox(height: 16),
-              SizedBox(
-                height: 75,
-                child: ListView.builder(
-                  itemCount: 2,
-                  scrollDirection: Axis.horizontal,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: index == 0 ? 24 : 0),
-                      child: InkWell(
-                        onTap: index == 0
-                            ? () {
-                                ref
-                                    .read(sendPackageProvider.notifier)
-                                    .changeIndex(index);
-                                if (ref.watch(sendPackageProvider).isValid) {
-                                  ref
-                                      .read(sendPackageProvider.notifier)
-                                      .createOrder(
+      body: ref.watch(addressProvider).when(
+              data: (value) {
+                address1.text = "${value.addressDetails.road} ${value.addressDetails.city}";
+                state1.text = "${value.addressDetails.state}, ${value.addressDetails.country}";
+
+                return Padding(
+                  padding: const EdgeInsets.only(left: 24, right: 24),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 43),
+                        Row(
+                          children: [
+                            Image.asset(
+                              "assets/images/origin_icon.png",
+                              width: 16,
+                              height: 16,
+                              fit: BoxFit.fill,
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Text(
+                              "Origin Details",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.textColor),
+                            )
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        packageTextField("Address", (value) {
+                          ref.read(sendPackageProvider.notifier).checkCreds(
+                              address1.text,
+                              state1.text,
+                              phone1.text,
+                              address2.text,
+                              state2.text,
+                              phone2.text,
+                              items.text,
+                              weight.text,
+                              worth.text);
+                        }, TextInputType.text, controller: address1),
+                        const SizedBox(height: 5),
+                        packageTextField("State,Country", (value) {
+                          ref.read(sendPackageProvider.notifier).checkCreds(
+                              address1.text,
+                              state1.text,
+                              phone1.text,
+                              address2.text,
+                              state2.text,
+                              phone2.text,
+                              items.text,
+                              weight.text,
+                              worth.text);
+                        }, TextInputType.text, controller: state1),
+                        const SizedBox(height: 5),
+                        packageTextField("Phone number", (value) {
+                          ref.read(sendPackageProvider.notifier).checkCreds(
+                              address1.text,
+                              state1.text,
+                              phone1.text,
+                              address2.text,
+                              state2.text,
+                              phone2.text,
+                              items.text,
+                              weight.text,
+                              worth.text);
+                        }, TextInputType.phone, controller: phone1),
+                        const SizedBox(height: 5),
+                        packageTextField("Others", (value) {
+                          ref.read(sendPackageProvider.notifier).checkCreds(
+                              address1.text,
+                              state1.text,
+                              phone1.text,
+                              address2.text,
+                              state2.text,
+                              phone2.text,
+                              items.text,
+                              weight.text,
+                              worth.text);
+                        }, TextInputType.text),
+                        const SizedBox(height: 5),
+                        SizedBox(
+                          height: 210.0 * ref.watch(sendPackageProvider).count,
+                          child: ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: ref.watch(sendPackageProvider).count,
+                            itemBuilder: (context, index) {
+                              return destinationCardWidget(address2, state2, phone2,
+                                      (value) {
+                                    ref.read(sendPackageProvider.notifier).checkCreds(
+                                        address1.text,
+                                        state1.text,
+                                        phone1.text,
+                                        address2.text,
+                                        state2.text,
+                                        phone2.text,
+                                        items.text,
+                                        weight.text,
+                                        worth.text);
+                                  }, index);
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 17),
+                        InkWell(
+                          onTap: () {
+                            ref.read(sendPackageProvider.notifier).addCount();
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                "assets/images/add-square.png",
+                                width: 14,
+                                height: 14,
+                                fit: BoxFit.fill,
+                              ),
+                              const SizedBox(
+                                width: 6,
+                              ),
+                              Text(
+                                "Add destination",
+                                style:
+                                TextStyle(fontSize: 12, color: AppColors.grey2Color),
+                              )
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 13),
+                        Text(
+                          "Package Details",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.textColor),
+                        ),
+                        const SizedBox(height: 8),
+                        packageTextField("package items", (value) {
+                          ref.read(sendPackageProvider.notifier).checkCreds(
+                              address1.text,
+                              state1.text,
+                              phone1.text,
+                              address2.text,
+                              state2.text,
+                              phone2.text,
+                              items.text,
+                              weight.text,
+                              worth.text);
+                        }, TextInputType.text, controller: items),
+                        const SizedBox(height: 8),
+                        packageTextField("Weight of item(kg)", (value) {
+                          ref.read(sendPackageProvider.notifier).checkCreds(
+                              address1.text,
+                              state1.text,
+                              phone1.text,
+                              address2.text,
+                              state2.text,
+                              phone2.text,
+                              items.text,
+                              weight.text,
+                              worth.text);
+                        }, TextInputType.text, controller: weight),
+                        const SizedBox(height: 8),
+                        packageTextField("Worth of Items", (value) {
+                          ref.read(sendPackageProvider.notifier).checkCreds(
+                              address1.text,
+                              state1.text,
+                              phone1.text,
+                              address2.text,
+                              state2.text,
+                              phone2.text,
+                              items.text,
+                              weight.text,
+                              worth.text);
+                        }, TextInputType.text, controller: worth),
+                        const SizedBox(height: 39),
+                        Text("Select delivery type",
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.textColor)),
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          height: 75,
+                          child: ListView.builder(
+                            itemCount: 2,
+                            scrollDirection: Axis.horizontal,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.only(right: index == 0 ? 24 : 0),
+                                child: InkWell(
+                                  onTap: index == 0
+                                      ? () {
+                                    ref
+                                        .read(sendPackageProvider.notifier)
+                                        .changeIndex(index);
+                                    if (ref.watch(sendPackageProvider).isValid) {
+                                      ref
+                                          .read(sendPackageProvider.notifier)
+                                          .createOrder(
                                           address1.text,
                                           state1.text,
                                           phone1.text,
@@ -299,15 +305,15 @@ class _SendPackagePageState extends ConsumerState<SendPackagePage> {
                                           weight.text,
                                           worth.text,
                                           supabase.auth.currentUser!.email!, track);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ConfirmOrderPage(track)));
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  ConfirmOrderPage(track)));
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
                                             title: const Text("Wrong input"),
                                             actions: [
                                               ElevatedButton(
@@ -317,57 +323,66 @@ class _SendPackagePageState extends ConsumerState<SendPackagePage> {
                                                   child: const Text("Ok"))
                                             ],
                                           ));
-                                }
-                              }
-                            : null,
-                        child: Material(
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Container(
-                            width: 159,
-                            height: 75,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: currentIndex == index
-                                    ? AppColors.primaryColor
-                                    : Colors.white),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  currentIndex == index
-                                      ? data[index][1]
-                                      : data[index][0],
-                                  width: 24,
-                                  height: 24,
-                                  fit: BoxFit.fill,
+                                    }
+                                  }
+                                      : null,
+                                  child: Material(
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Container(
+                                      width: 159,
+                                      height: 75,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          color: currentIndex == index
+                                              ? AppColors.primaryColor
+                                              : Colors.white),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            currentIndex == index
+                                                ? data[index][1]
+                                                : data[index][0],
+                                            width: 24,
+                                            height: 24,
+                                            fit: BoxFit.fill,
+                                          ),
+                                          const SizedBox(height: 10),
+                                          Text(
+                                            data[index][2],
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w500,
+                                                color: currentIndex == index
+                                                    ? Colors.white
+                                                    : AppColors.grey2Color),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  data[index][2],
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                      color: currentIndex == index
-                                          ? Colors.white
-                                          : AppColors.grey2Color),
-                                )
-                              ],
-                            ),
+                              );
+                            },
                           ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
-      ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              error: (error, stacktrace) {
+                return Center(
+                    child: Text(error.toString()),
+                );
+              },
+              loading: () => const Center(
+                      child: CircularProgressIndicator(),
+              ))
     );
   }
 }
