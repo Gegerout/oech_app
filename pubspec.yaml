@@ -24,6 +24,7 @@ dependencies:
   http: ^0.13.6
   provider: ^6.0.5
   connectivity_plus: ^4.0.1
+  sensors_plus: ^3.0.2
 
 dev_dependencies:
   flutter_test:
