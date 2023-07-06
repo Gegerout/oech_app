@@ -25,6 +25,7 @@ dependencies:
   connectivity_plus: ^4.0.1
   provider: ^6.0.5
   sensors_plus: ^3.0.2
+  geocoding_resolver: ^0.0.3+2
 
 dev_dependencies:
   flutter_test:
