@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:oech_app/home/presentation/states/send_package_state.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 import '../../../core/theme/colors.dart';
 import '../../../core/widgets/buttons.dart';
@@ -30,6 +31,7 @@ class _DeliverySuccessPageState extends ConsumerState<DeliverySuccessPage>
   int _start = 4;
   bool isComplete = false;
   int currentIndex = -1;
+  double dx = 100, dy = 100;
 
   List images = [
     "assets/images/check_1.png",
@@ -167,37 +169,58 @@ class _DeliverySuccessPageState extends ConsumerState<DeliverySuccessPage>
                   style: TextStyle(fontSize: 14, color: AppColors.primaryColor),
                 ),
                 const SizedBox(height: 16),
-                SizedBox(
-                  height: 48,
-                  width: 240,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return IconButton(
-                        onPressed: () {
-                          setState(() {
-                            currentIndex = index;
-                          });
-                        },
-                        icon: currentIndex >= index
-                            ? Image.asset(
+                StreamBuilder<GyroscopeEvent>(
+                  stream: SensorsPlatform.instance.gyroscopeEvents,
+                    builder: (context, snapshot) {
+                  if(snapshot.hasData) {
+                    dx = dx + snapshot.data!.x * 10;
+                    dy = dy + snapshot.data!.y * 10;
+
+                    if(dy <= 90 && currentIndex >= 0) {
+                      currentIndex--;
+                    }
+
+                    if(dy >= 130 && currentIndex <= 4) {
+                      currentIndex++;
+                    }
+                    
+                    return SizedBox(
+                      height: 48,
+                      width: 240,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 5,
+                        itemBuilder: (context, index) {
+                          return IconButton(
+                            onPressed: () {
+                              setState(() {
+                                currentIndex = index;
+                              });
+                            },
+                            icon: AnimatedContainer(
+                              duration: const Duration(milliseconds: 500),
+                              child: currentIndex >= index
+                                  ? Image.asset(
                                 "assets/images/star_icon_active.png",
                                 width: 17,
                                 height: 16,
                                 fit: BoxFit.fill,
                               )
-                            : Image.asset(
+                                  : Image.asset(
                                 "assets/images/star_icon.png",
                                 width: 17,
                                 height: 16,
                                 fit: BoxFit.fill,
                               ),
-                      );
-                    },
-                  ),
-                ),
+                            )
+                          );
+                        },
+                      ),
+                    );
+                  }
+                  return Container();
+                }),
                 const SizedBox(height: 37),
                 Material(
                   elevation: 4,
