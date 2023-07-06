@@ -254,7 +254,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
   late User user;
   int currentTab = 6;
 
-  List pages = ["", SendPackagePage(), "", BookRiderPage()];
+  List pages = [HomeWidget(), WalletPage(), TrackPage(), ProfilePage()];
 
   @override
   void initState() {
