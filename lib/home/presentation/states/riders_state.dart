@@ -13,8 +13,10 @@ final getRidersProvider =
 
 final getRiderProfileProvider = FutureProvider.family<(Position, RiderModel), String>((ref, regNum) async {
   final data = await DataRepository().gerRider(regNum);
-  List<LatLng> routpoints = [];
-  LocationPermission permission = await Geolocator.requestPermission();
+  LocationPermission isPermission = await Geolocator.checkPermission();
+  if(isPermission == LocationPermission.denied) {
+    await Geolocator.requestPermission();
+  }
   final position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   return (position, data);
 });

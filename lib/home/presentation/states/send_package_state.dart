@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geocoding_resolver/geocoding_resolver.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:oech_app/home/data/models/order_model.dart';
 import 'package:oech_app/home/data/repository/data_repository.dart';
 import 'package:oech_app/home/domain/usecases/order_usecase.dart';
@@ -87,4 +89,15 @@ final orderProvider =
     FutureProvider.family<OrderModel, String>((ref, track) async {
   final data = await DataRepository().getOrder(track);
   return data.data;
+});
+
+final addressProvider = FutureProvider((ref) async {
+  GeoCoder geoCoder = GeoCoder();
+  LocationPermission isPermission = await Geolocator.checkPermission();
+  if(isPermission == LocationPermission.denied) {
+    await Geolocator.requestPermission();
+  }
+  final position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  Address address = await geoCoder.getAddressFromLatLng(latitude: position.latitude, longitude: position.longitude);
+  return address;
 });
