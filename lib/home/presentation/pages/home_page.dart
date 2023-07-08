@@ -257,7 +257,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
   late User user;
   int currentTab = 6;
 
-  List pages = [HomePage(0), SendPackagePage(), HomePage(0), HomePage(0)];
+  List pages = ["", SendPackagePage(), "", ""];
 
   @override
   void initState() {
@@ -479,10 +479,12 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                           setState(() {
                             currentTab = index;
                           });
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => pages[index]));
+                          if(index == 1) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => pages[index]));
+                          }
                         },
                         child: Material(
                           elevation: 2,
